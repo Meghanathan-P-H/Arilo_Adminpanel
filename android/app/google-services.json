@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "1016873297812",
+    "project_id": "arilo-ecommerce-87bb6",
+    "storage_bucket": "arilo-ecommerce-87bb6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016873297812:android:95952b086c8316e4ae1181",
+        "android_client_info": {
+          "package_name": "com.example.arilo_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016873297812-gek1vt2chh13bjkr4efhv9lm7o3j985k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtaUZROlExLh2SYCI2czr7lqOyPaQp0iI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016873297812-gek1vt2chh13bjkr4efhv9lm7o3j985k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016873297812-0ksppcp6m43qapaovqsfrk46a10bj7r1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.userappArilo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016873297812:android:5974cc51f7f03d92ae1181",
+        "android_client_info": {
+          "package_name": "com.example.userapp_arilo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016873297812-6sh5c5kdk7k70bkqoafu6da1n0slidd7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.userapp_arilo",
+            "certificate_hash": "d7653fc543db2d1a614a2ae0fbcdb991fa5c0eb3"
+          }
+        },
+        {
+          "client_id": "1016873297812-gek1vt2chh13bjkr4efhv9lm7o3j985k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtaUZROlExLh2SYCI2czr7lqOyPaQp0iI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016873297812-gek1vt2chh13bjkr4efhv9lm7o3j985k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016873297812-0ksppcp6m43qapaovqsfrk46a10bj7r1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.userappArilo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
