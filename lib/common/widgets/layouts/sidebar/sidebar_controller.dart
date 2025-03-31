@@ -5,7 +5,7 @@
 //   // final activeItem = AriloRoute.responsiveDesign.obs;
 //   final hoverItem = ''.obs;
 
-//   // void changeActiveItem(String route) => activeItem.value = route;
+//   void changeActiveItem(String route) => activeItem.value = route;
 
 //   void changeHoverItem(String route) {
 //     if (!isActive(route)) hoverItem.value = route;
