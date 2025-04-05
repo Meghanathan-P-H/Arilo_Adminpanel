@@ -1,5 +1,6 @@
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AuthenticationRepo extends GetxController {
@@ -17,15 +18,15 @@ class AuthenticationRepo extends GetxController {
     _auth.setPersistence(Persistence.LOCAL);
   }
 
-  void screenRedirect() async {
-    final user = _auth.currentUser;
+ void screenRedirect() async {
+  final user = _auth.currentUser;
 
-    if (user != null) {
-      Get.offAll(AriloRoute.dashboard);
-    } else {
-      Get.offAllNamed(AriloRoute.login);
-    }
+  if (user != null) {
+    Get.offAllNamed(AriloRoute.dashboard);
+  } else {
+    Get.offAllNamed(AriloRoute.login);
   }
+}
 
   Future<UserCredential> loginWithEmailAndPassword(
     String email,
@@ -72,8 +73,46 @@ class AuthenticationRepo extends GetxController {
         throw 'Registration failed: ${e.message}';
       }
     } catch (e) {
-      // Generic error handler
       throw 'Registration failed. Please try again';
     }
   }
+  
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+        await _auth.sendPasswordResetEmail(email: email);
+     } on FirebaseAuthException catch (e) {
+      throw 'Authentication error: ${e.message}';
+    } on FirebaseException catch (e) {
+      throw 'Firestore error: ${e.message}';
+    } on FormatException catch (_) {
+      throw 'Invalid data format';
+    } on PlatformException catch (e) {
+      throw 'Platform error: ${e.message}';
+    } catch (e) {
+        throw 'Something went wrong. Please try again';
+    }
+}
+
+
+
+
+
+
+  Future<void> logout() async {
+    try {
+        await FirebaseAuth.instance.signOut();
+        Get.offAllNamed(AriloRoute.login);
+    } on FirebaseAuthException catch (e) {
+      throw 'Authentication error: ${e.message}';
+    } on FirebaseException catch (e) {
+      throw 'Firestore error: ${e.message}';
+    } on FormatException catch (_) {
+      throw 'Invalid data format';
+    } on PlatformException catch (e) {
+      throw 'Platform error: ${e.message}';
+    } catch (e) {
+      throw 'Something went wrong: $e';
+    }
+}
 }

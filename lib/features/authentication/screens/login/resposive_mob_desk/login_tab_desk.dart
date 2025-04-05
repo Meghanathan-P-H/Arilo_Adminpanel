@@ -1,7 +1,10 @@
-import 'package:arilo_admin/routes/routes.dart';
+import 'package:arilo_admin/features/authentication/controller/forgotpswd_contoller.dart';
+import 'package:arilo_admin/features/authentication/controller/login_controller.dart';
+import 'package:arilo_admin/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -12,17 +15,8 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isLogin = true;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final double containerWidth = 769;
   final double containerHeight = 497;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
 
   void toggleScreen() {
     setState(() {
@@ -105,206 +99,233 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   }
 
   Widget _buildLoginForm() {
+     final controller = Get.put(LoginController());
     return Padding(
       key: const ValueKey('login'),
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          Text(
-            'ADMIN LOGIN',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5,
-            ),
-          ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 8),
-          Text(
-            'Welcome back!',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black87,
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 100.ms).slideX(begin: 0.2, end: 0),
-          Text(
-            'Hello there, login and start managing your application',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.black54,
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 40),
-          TextFormField(
-            controller: _emailController,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+      child: Form(
+        key: controller.loginFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              'ADMIN LOGIN',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+            ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 8),
+            Text(
+              'Welcome back!',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 300.ms).slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+            ).animate().fadeIn(duration: 600.ms, delay: 100.ms).slideX(begin: 0.2, end: 0),
+            Text(
+              'Hello there, login and start managing your application',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.black54,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+            ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 40),
+            TextFormField(
+              controller: controller.email,
+              validator: AriloValidator.validateEmail,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 400.ms).slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: true,
-                    onChanged: (value) {},
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                    ),
+            ).animate().fadeIn(duration: 600.ms, delay: 300.ms).slideY(begin: 0.2, end: 0),
+            const SizedBox(height: 20),
+            Obx(
+              ()=> TextFormField(
+                controller: controller.password,
+                 validator:
+                          (value) =>
+                              AriloValidator.validateEmptyText('Password', value),
+                obscureText: controller.hidePassword.value,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
                   ),
-                  Text(
-                    'Remember me',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  suffixIcon: IconButton(
+                          onPressed:
+                              () =>
+                                  controller.hidePassword.value =
+                                      !controller.hidePassword.value,
+                          icon: Icon(
+                            controller.hidePassword.value
+                                ? Iconsax.eye_slash
+                                : Iconsax.eye,
+                          ),
+                        ),
+                ),
+              ).animate().fadeIn(duration: 600.ms, delay: 400.ms).slideY(begin: 0.2, end: 0),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Obx(
+                        () => Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged:
+                              (value) => controller.rememberMe.value = value!,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
+                    Text(
+                      'Remember me',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+                TextButton(
+                  onPressed: toggleScreen,
+                  child: Text(
+                    'Forgot Password?',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black87,
                     ),
                   ),
-                ],
-              ),
-              TextButton(
-                onPressed: toggleScreen,
-                child: Text(
-                  'Forgot Password?',
+                ),
+              ],
+            ).animate().fadeIn(duration: 600.ms, delay: 500.ms),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.emailAndPassword(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'Log in',
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-            ],
-          ).animate().fadeIn(duration: 600.ms, delay: 500.ms),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Log in',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 600.ms).scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
-        ],
+            ).animate().fadeIn(duration: 600.ms, delay: 600.ms).scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildForgotPasswordForm() {
+    final forgotController = Get.put(ForgetPasswordController());
     return Padding(
       key: const ValueKey('forgot'),
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            onPressed: toggleScreen,
-            icon: Icon(Icons.arrow_back),
-            padding: EdgeInsets.zero,
-            alignment: Alignment.centerLeft,
-          ).animate().fadeIn(duration: 400.ms),
-          const SizedBox(height: 20),
-          Text(
-            'Forgot Your Password?',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 16),
-          Text(
-            'Enter email associated with your account and we\'ll send and email with intructions to reset your password',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 40),
-          TextFormField(
-            controller: _emailController,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+      child: Form(
+        key: forgotController.forgetPasswordFormKey, 
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: toggleScreen,
+              icon: Icon(Icons.arrow_back),
+              padding: EdgeInsets.zero,
+              alignment: Alignment.centerLeft,
+            ).animate().fadeIn(duration: 400.ms),
+            const SizedBox(height: 20),
+            Text(
+              'Forgot Your Password?',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+            ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 16),
+            Text(
+              'Enter email associated with your account and we\'ll send and email with intructions to reset your password',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 300.ms).slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 40),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                final email =
-                        _emailController
-                            .text;
-
-                    Get.toNamed(
-                      AriloRoute
-                          .forgotPassword, 
-                      parameters: {'email': email},
-                    );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
+            ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 40),
+            TextFormField(
+              controller: forgotController.email,
+              validator: AriloValidator.validateEmail,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              ),
+            ).animate().fadeIn(duration: 600.ms, delay: 300.ms).slideY(begin: 0.2, end: 0),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  forgotController.sendPasswordResetEmail();
+        
+                  //     Get.toNamed(
+                  //       AriloRoute
+                  //           .forgotPassword, 
+                  //       parameters: {'email': email},
+                  //     );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'Verify',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-              child: const Text(
-                'Verify',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ).animate().fadeIn(duration: 600.ms, delay: 400.ms).scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
-        ],
+            ).animate().fadeIn(duration: 600.ms, delay: 400.ms).scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
+          ],
+        ),
       ),
     );
   }

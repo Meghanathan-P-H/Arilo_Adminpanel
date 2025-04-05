@@ -1,4 +1,5 @@
 import 'package:arilo_admin/common/widgets/layouts/sidebar/menu/menu.dart';
+import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,7 +10,8 @@ class AriloSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      shape: BeveledRectangleBorder(),
+      shape: const BeveledRectangleBorder(),
+      width: 250, 
       child: Container(
         decoration: BoxDecoration(
           color: AriloColors.primary,
@@ -20,21 +22,42 @@ class AriloSideBar extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // AssetImage(assetName) i want set image logo of application here
-              SizedBox(height: 32),
+             Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Container(
+                  height: 40,
+                  width: 120,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: const Text(
+                    'ARILO',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ), SizedBox(height: 16), // Reduced spacing
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'MENU',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall!.apply(letterSpacingDelta: 1.2),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, bottom: 8),
+                    child: Text(
+                      'MENU',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        letterSpacing: 1.2, // Use letterSpacing instead of letterSpacingDelta
+                      ),
+                    ),
                   ),
-                  // AriloMenu(route: '', icon: Iconsax.status, itemName: 'Dashboard'),
-                  // AriloMenu(route: '', icon: Iconsax.image, itemName: 'Media'),
-                  // AriloMenu(route: '', icon: Iconsax.picture_frame, itemName: 'Banners'),
+                  // Sidebar menu items
+                  AriloMenu(route: AriloRoute.dashboard, icon: Iconsax.status, itemName: 'Dashboard'),
+                  AriloMenu(route: '', icon: Iconsax.image, itemName: 'Media'),
+                  AriloMenu(route: '', icon: Iconsax.picture_frame, itemName: 'Banners'),
                 ],
               ),
             ],

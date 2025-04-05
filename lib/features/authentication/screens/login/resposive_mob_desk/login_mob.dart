@@ -1,10 +1,9 @@
+import 'package:arilo_admin/features/authentication/controller/forgotpswd_contoller.dart';
 import 'package:arilo_admin/features/authentication/controller/login_controller.dart';
-import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AuthenticationMobileScreen extends StatefulWidget {
@@ -240,7 +239,7 @@ class _AuthenticationMobileScreenState
                   ],
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed:toggleScreen,
                   child: Text(
                     'Forgot Password?',
                     style: TextStyle(fontSize: 12, color: Colors.black87),
@@ -252,7 +251,7 @@ class _AuthenticationMobileScreenState
             SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => controller.registerAdmin(),
+                    onPressed: () => controller.emailAndPassword(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -279,84 +278,82 @@ class _AuthenticationMobileScreenState
   }
 
   Widget _buildForgotPasswordForm() {
+    final forgotController = Get.put(ForgetPasswordController());
     return Padding(
       key: const ValueKey('forgot'),
       padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            onPressed: toggleScreen,
-            icon: Icon(Icons.arrow_back),
-            padding: EdgeInsets.zero,
-            alignment: Alignment.centerLeft,
-          ).animate().fadeIn(duration: 400.ms),
-          const SizedBox(height: 16),
-          Text(
-            'Forgot Your Password?',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 12),
-          Text(
-                'Enter email associated with your account and we\'ll send and email with intructions to reset your password',
-                style: TextStyle(fontSize: 14, color: Colors.black87),
-              )
-              .animate()
-              .fadeIn(duration: 600.ms, delay: 200.ms)
-              .slideX(begin: 0.2, end: 0),
-          const SizedBox(height: 24),
-          TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
-              )
-              .animate()
-              .fadeIn(duration: 600.ms, delay: 300.ms)
-              .slideY(begin: 0.2, end: 0),
-          const SizedBox(height: 32),
-          SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // final email =
-                    //     _emailController
-                    //         .text; // Replace with your actual email variable
-
-                    // Get.toNamed(
-                    //   AriloRoute
-                    //       .forgotPassword, // Replace with your actual route name for ForgotSuccess
-                    //   parameters: {'email': email},
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
+      child: Form(
+        key: forgotController.forgetPasswordFormKey, 
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(
+              onPressed: toggleScreen,
+              icon: Icon(Icons.arrow_back),
+              padding: EdgeInsets.zero,
+              alignment: Alignment.centerLeft,
+            ).animate().fadeIn(duration: 400.ms),
+            const SizedBox(height: 16),
+            Text(
+              'Forgot Your Password?',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ).animate().fadeIn(duration: 600.ms).slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 12),
+            Text(
+                  'Enter email associated with your account and we\'ll send and email with intructions to reset your password',
+                  style: TextStyle(fontSize: 14, color: Colors.black87),
+                )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 200.ms)
+                .slideX(begin: 0.2, end: 0),
+            const SizedBox(height: 24),
+            TextFormField(
+                  controller: forgotController.email,
+                  validator: AriloValidator.validateEmail,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
                     ),
                   ),
-                  child: const Text(
-                    'Verify',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 300.ms)
+                .slideY(begin: 0.2, end: 0),
+            const SizedBox(height: 32),
+            SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      forgotController.sendPasswordResetEmail();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Verify',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
                   ),
-                ),
-              )
-              .animate()
-              .fadeIn(duration: 600.ms, delay: 400.ms)
-              .scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
-        ],
+                )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 400.ms)
+                .scale(begin: Offset(0.9, 0.9), end: Offset(1, 1)),
+          ],
+        ),
       ),
     );
   }

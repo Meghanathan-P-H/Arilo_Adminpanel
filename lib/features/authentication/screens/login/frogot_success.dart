@@ -1,34 +1,33 @@
 import 'package:arilo_admin/common/widgets/layouts/templates/site_layout.dart';
+import 'package:arilo_admin/features/authentication/controller/forgotpswd_contoller.dart';
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgotSuccess extends StatelessWidget {
-  const ForgotSuccess({super.key});
+  const ForgotSuccess({super.key, this.email});
+
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
-    final email = Get.parameters['email'] ?? 'some@email';
-    
-    
-    Widget desktopContent = _buildDesktopContent(context, email);
-    Widget tabletContent = _buildTabletContent(context, email);
-    Widget mobileContent = _buildMobileContent(context, email);
-    
-   
+    Widget desktopContent = _buildDesktopContent(context, email ?? '');
+    Widget tabletContent = _buildTabletContent(context, email ?? '');
+    Widget mobileContent = _buildMobileContent(context, email ?? '');
+
     return AriloSiteTemplate(
       desktop: desktopContent,
       tablet: tabletContent,
       mobile: mobileContent,
-      userLayout: false, 
+      userLayout: false,
     );
   }
 
   Widget _buildDesktopContent(BuildContext context, String email) {
     return _buildContentWithSize(
-      context, 
-      email, 
+      context,
+      email,
       imageSize: 300.0,
       contentWidth: 800.0,
       contentPadding: 64.0,
@@ -40,8 +39,8 @@ class ForgotSuccess extends StatelessWidget {
 
   Widget _buildTabletContent(BuildContext context, String email) {
     return _buildContentWithSize(
-      context, 
-      email, 
+      context,
+      email,
       imageSize: 250.0,
       contentWidth: 600.0,
       contentPadding: 48.0,
@@ -54,8 +53,8 @@ class ForgotSuccess extends StatelessWidget {
   Widget _buildMobileContent(BuildContext context, String email) {
     final size = MediaQuery.of(context).size;
     return _buildContentWithSize(
-      context, 
-      email, 
+      context,
+      email,
       imageSize: 200.0,
       contentWidth: size.width,
       contentPadding: 24.0,
@@ -66,7 +65,7 @@ class ForgotSuccess extends StatelessWidget {
   }
 
   Widget _buildContentWithSize(
-    BuildContext context, 
+    BuildContext context,
     String email, {
     required double imageSize,
     required double contentWidth,
@@ -142,7 +141,8 @@ class ForgotSuccess extends StatelessWidget {
                   SizedBox(height: spacing / 2),
                   TextButton(
                     onPressed: () {
-                     
+                      ForgetPasswordController.instance
+                          .resendPasswordResetEmail(email);
                     },
                     child: const Text('Resend Email'),
                   ),

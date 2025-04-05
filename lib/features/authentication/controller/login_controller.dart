@@ -1,8 +1,11 @@
+import 'package:arilo_admin/data/network/network_manager.dart';
 import 'package:arilo_admin/data/repositories/authentication_repo.dart';
 import 'package:arilo_admin/data/repositories/user_repo.dart';
+import 'package:arilo_admin/features/authentication/controller/user_controller.dart';
 import 'package:arilo_admin/features/authentication/models/user_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:arilo_admin/utils/popups/full_screen_popups.dart';
+import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -18,78 +21,94 @@ class LoginController extends GetxController {
   final password = TextEditingController();
   final loginFormKey = GlobalKey<FormState>();
 
-  // Future<void> emailAndPasswordSignIn() async {
-  //   final isLoading = true.obs;
-  //   try {
-  //     Get.dialog(
-  //       const Center(child: CircularProgressIndicator()),
-  //       barrierDismissible: false,
-  //     );
+  @override
+  void onInit() {
+    email.text = localStorage.read('REMEMBER_ME_EMAIL') ?? '';
+    password.text = localStorage.read('REMEMBER_ME_PASSWORD') ?? '';
 
-  //     if (!loginFormKey.currentState!.validate()) {
-  //       return;
-  //     }
+    super.onInit();
+  }
 
-  //     await AuthenticationRepo.instance.loginWithEmailAndPassword(
-  //       email.text.trim(),
-  //       password.text.trim(),
-  //     );
-
-  //     final user =await ;
-
-  //     if(user.role != AppRole.admin){
-  //      await AuthenticationRepo.instance.logout();
-       
-  //     }
-  //   } catch (e) {
-  //   } finally {}
-  // }
-
-  Future<void> registerAdmin() async {
-    final isLoading = true.obs;
-
+  Future<void> emailAndPassword() async {
     try {
-      Get.dialog(
-        const Center(child: CircularProgressIndicator()),
-        barrierDismissible: false,
+      FullScreenLoader.show('Logging you in...', 'assets/logos/loding.json');
+
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        FullScreenLoader.stopLoading();
+        return;
+      }
+
+      if (!loginFormKey.currentState!.validate()) {
+        FullScreenLoader.stopLoading();
+        return;
+      }
+
+      if (rememberMe.value) {
+        localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
+        localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
+      }
+
+      await AuthenticationRepo.instance.loginWithEmailAndPassword(
+        email.text.trim(),
+        password.text.trim(),
       );
 
-      final userCredential = await AuthenticationRepo.instance
-          .registerWithEmailAndPassword(
-            'meghanathanph1@gmail.com',
-            'admin@123',
-          );
+      final user = await UserController.instance.fetchUserDetails();
+      FullScreenLoader.stopLoading();
+
+      if (user.role != AppRole.admin) {
+        await AuthenticationRepo.instance.logout();
+        ALoaders.showErrorSnackBar(
+          title: 'Not Authorized',
+          message:
+              'You are not authorized or do not have access. Contact Admin',
+        );
+      } else {
+        AuthenticationRepo.instance.screenRedirect();
+      }
+    } catch (e) {
+       FullScreenLoader.stopLoading();
+      ALoaders.showErrorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  Future<void> registerAdmin() async {
+    try {
+      FullScreenLoader.show(
+        'Registering Admin Account',
+        'assets/logos/loding.json',
+      );
+
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        FullScreenLoader.stopLoading();
+        return;
+      }
+
+      await AuthenticationRepo.instance.registerWithEmailAndPassword(
+        'dadud3002@gmail.com',
+        'Admin@123',
+      );
 
       final userRepository = Get.put(UserRepository());
       await userRepository.createUser(
         UserModel(
-          id: userCredential.user?.uid ?? '',
-          email: 'meghanathanph1@gmail.com',
+          id: AuthenticationRepo.instance.authUser!.uid,
           firstName: 'Megha',
           lastName: 'Admin',
+          email: 'dadud3002@gmail.com',
           role: AppRole.admin,
           createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
         ),
       );
 
+      FullScreenLoader.stopLoading();
+
       AuthenticationRepo.instance.screenRedirect();
-    } on FirebaseAuthException catch (e) {
-      Get.back();
-      Get.snackbar(
-        'Registration Failed',
-        e.message ?? 'Unknown error occurred',
-        snackPosition: SnackPosition.BOTTOM,
-      );
     } catch (e) {
-      Get.back();
-      Get.snackbar(
-        'Error',
-        'Failed to register admin: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    } finally {
-      isLoading.value = false;
+      FullScreenLoader.stopLoading();
+      ALoaders.showErrorSnackBar(title: 'Oh Snap', message: e.toString());
     }
   }
 }

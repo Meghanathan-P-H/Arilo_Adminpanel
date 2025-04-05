@@ -11,18 +11,17 @@ class DesktopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
-      appBar: AppBar(),
       body: Row(
         children: [
           Expanded(child: AriloSideBar()),
           Expanded(
+            flex: 5,
             child: Column(
               children: [
                 //header
                 AriloHeader(),
 
-                body ?? const SizedBox(),
+                Expanded(child: body ?? const SizedBox()),
               ],
             ),
           ),
