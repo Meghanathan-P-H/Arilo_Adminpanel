@@ -1,4 +1,4 @@
-import 'package:arilo_admin/common/widgets/images/rounded_image.dart';
+import 'package:arilo_admin/common/widgets/containers/rounded_image.dart';
 import 'package:arilo_admin/features/authentication/controller/user_controller.dart';
 import 'package:arilo_admin/utils/constants/shimmer_eff.dart';
 import 'package:arilo_admin/utils/device/device_utility.dart';

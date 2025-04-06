@@ -12,7 +12,12 @@ enum ImageType { asset, network, memory, file }
 
 enum MediaCategory { folders, banners, brands, categories, products, users }
 
-enum OrderStatus { pending, processing, shipped, delivered, cancelled }
+enum OrderStatus {
+  processing,
+  shipped,
+  delivered,
+  cancelled,
+}
 
 enum PaymentMethods {
   paypal,
