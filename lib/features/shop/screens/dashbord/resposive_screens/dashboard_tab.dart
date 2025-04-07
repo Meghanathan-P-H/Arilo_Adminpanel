@@ -71,8 +71,6 @@ class DashboardTab extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-
-              // ✅ Fixed BarGraph container
               SizedBox(
                 height: 400,
                 child: const BarGraph(),
@@ -87,7 +85,6 @@ class DashboardTab extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // ✅ Fixed OrderStatusPieChart container
               SizedBox(
                 height: 500,
                 child: const OrderStatusPieChart(),

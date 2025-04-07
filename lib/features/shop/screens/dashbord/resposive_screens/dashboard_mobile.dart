@@ -53,7 +53,7 @@ class DashboardMobile extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // ✅ Fixed BarGraph container
+
               SizedBox(
                 height: 400,
                 child: const BarGraph(),
@@ -68,7 +68,6 @@ class DashboardMobile extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // ✅ Fixed PieChart container
               SizedBox(
                 height: 500,
                 child: const OrderStatusPieChart(),

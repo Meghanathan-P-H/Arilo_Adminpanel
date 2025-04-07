@@ -1,4 +1,5 @@
 import 'package:arilo_admin/utils/constants/enums.dart';
+import 'package:arilo_admin/utils/helpers/date_helper.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
@@ -101,4 +102,7 @@ class OrderModel {
     required this.orderDate,
     required this.deliveryDate,
   });
+
+  String get formattedOrderDate =>
+      AriloHelperFunctions.getFormattedDate(orderDate);
 }
