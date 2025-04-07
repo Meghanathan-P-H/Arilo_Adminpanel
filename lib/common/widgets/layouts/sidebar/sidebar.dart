@@ -50,14 +50,14 @@ class AriloSideBar extends StatelessWidget {
                     child: Text(
                       'MENU',
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        letterSpacing: 1.2, // Use letterSpacing instead of letterSpacingDelta
+                        letterSpacing: 1.2,
                       ),
                     ),
                   ),
                   // Sidebar menu items
                   AriloMenu(route: AriloRoute.dashboard, icon: Iconsax.status, itemName: 'Dashboard'),
-                  AriloMenu(route: '', icon: Iconsax.image, itemName: 'Media'),
-                  AriloMenu(route: '', icon: Iconsax.picture_frame, itemName: 'Banners'),
+                  AriloMenu(route: AriloRoute.media, icon: Iconsax.image, itemName: 'Media'),
+                 
                 ],
               ),
             ],
