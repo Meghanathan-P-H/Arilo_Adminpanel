@@ -78,7 +78,7 @@ class DashboardDesk extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BarGraph(),
+                  BarGraph(useExpanded: true, flex: 2),
 
                   const SizedBox(width: 16),
 

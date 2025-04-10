@@ -18,7 +18,6 @@ class DesktopLayout extends StatelessWidget {
             flex: 5,
             child: Column(
               children: [
-                //header
                 AriloHeader(),
 
                 Expanded(child: body ?? const SizedBox()),

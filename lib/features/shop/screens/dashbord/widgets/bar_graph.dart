@@ -6,80 +6,85 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class BarGraph extends StatelessWidget {
-  const BarGraph({super.key});
-
+  final bool useExpanded;
+  final int flex;
+  
+  const BarGraph({
+    super.key, 
+    this.useExpanded = true,
+    this.flex = 2,
+  });
 
   @override
   Widget build(BuildContext context) {
-     final controller = Get.put(DashboardController());
-    return Expanded(
-      flex: 2,
-      child: ARoundedContainer(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Weekly Sales'),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 300,
-              child: Obx(
-                () => BarChart(
-                  BarChartData(
-                    // Chart configuration remains the same
-                    titlesData: _buildTitlesData(),
-                    borderData: FlBorderData(
-                      show: true,
-                      border: Border(
-                        top: BorderSide.none,
-                        right: BorderSide.none,
-                      ),
+    final controller = Get.put(DashboardController());
+    
+    // The actual chart content
+    Widget content = ARoundedContainer(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('Weekly Sales'),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 300,
+            child: Obx(
+              () => BarChart(
+                BarChartData(
+                  // Chart configuration remains the same
+                  titlesData: _buildTitlesData(),
+                  borderData: FlBorderData(
+                    show: true,
+                    border: Border(
+                      top: BorderSide.none,
+                      right: BorderSide.none,
                     ),
-                    gridData: FlGridData(
-                      show: true,
-                      drawHorizontalLine: true,
-                      drawVerticalLine: true,
-                      horizontalInterval: 200,
+                  ),
+                  gridData: FlGridData(
+                    show: true,
+                    drawHorizontalLine: true,
+                    drawVerticalLine: true,
+                    horizontalInterval: 200,
+                  ),
+                  barGroups:
+                      controller.weeklySales
+                          .asMap()
+                          .entries
+                          .map(
+                            (entry) => BarChartGroupData(
+                              x: entry.key,
+                              barRods: [
+                                BarChartRodData(
+                                  toY: entry.value,
+                                  width: 22,
+                                  color: const Color(0xFFA877FD),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ],
+                            ),
+                          )
+                          .toList(),
+                  groupsSpace: 16,
+                  barTouchData: BarTouchData(
+                    touchTooltipData: BarTouchTooltipData(
+                      getTooltipColor: (_) => Colors.white,
                     ),
-                    barGroups:
-                        controller.weeklySales
-                            .asMap()
-                            .entries
-                            .map(
-                              (entry) => BarChartGroupData(
-                                x: entry.key,
-                                barRods: [
-                                  BarChartRodData(
-                                    toY: entry.value,
-                                    width: 22,
-                                    color: const Color(0xFFA877FD),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                    groupsSpace: 16,
-                    barTouchData: BarTouchData(
-                      touchTooltipData: BarTouchTooltipData(
-                        getTooltipColor: (_) => Colors.white,
-                      ),
-                      touchCallback:
-                          AriloDeviceUtils.isDesktopScreen(context)
-                              ? (barTouchEvent, barTouchResponse) {}
-                              : null,
-                    ),
+                    touchCallback:
+                        AriloDeviceUtils.isDesktopScreen(context)
+                            ? (barTouchEvent, barTouchResponse) {}
+                            : null,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+     return useExpanded ? Expanded(flex: flex, child: content) : content;
   }
 
   FlTitlesData _buildTitlesData() {
