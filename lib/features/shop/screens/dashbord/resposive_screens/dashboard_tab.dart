@@ -71,7 +71,7 @@ class DashboardTab extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              const BarGraph(useExpanded: false),
+              const BarGraph(),
 
               const SizedBox(height: 24),
 

@@ -7,21 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BarGraph extends StatelessWidget {
-  final bool useExpanded;
-  final int flex;
-  
-  const BarGraph({
-    super.key, 
-    this.useExpanded = true,
-    this.flex = 2,
-  });
+  const BarGraph({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
-    
-    // The actual chart content
-    Widget content = ARoundedContainer(
+    return ARoundedContainer(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +25,6 @@ class BarGraph extends StatelessWidget {
             child: Obx(
               () => BarChart(
                 BarChartData(
-                  // Chart configuration remains the same
                   titlesData: _buildTitlesData(),
                   borderData: FlBorderData(
                     show: true,
@@ -84,7 +74,6 @@ class BarGraph extends StatelessWidget {
         ],
       ),
     );
-     return useExpanded ? Expanded(flex: flex, child: content) : content;
   }
 
   FlTitlesData _buildTitlesData() {

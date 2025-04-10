@@ -78,36 +78,44 @@ class DashboardDesk extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BarGraph(useExpanded: true, flex: 2),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+
+                        BarGraph(),
+
+                        const SizedBox(height: 16),
+
+                        ARoundedContainer(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Recent Order',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 300,
+                                child: DashboardOrderTable(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
                   const SizedBox(width: 16),
 
                   Expanded(child: OrderStatusPieChart()),
                 ],
-              ),
-
-              const SizedBox(height: 16),
-
-              ARoundedContainer(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Recent Order',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 300, 
-                      child: DashboardOrderTable(),
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
