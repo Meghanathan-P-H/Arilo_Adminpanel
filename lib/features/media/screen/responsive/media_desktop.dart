@@ -1,4 +1,5 @@
 import 'package:arilo_admin/common/widgets/breadcrumps/breadcrumb_with_heading.dart';
+import 'package:arilo_admin/features/media/controls/media_controller.dart';
 import 'package:arilo_admin/features/media/screen/widgets/media_content.dart';
 import 'package:arilo_admin/features/media/screen/widgets/media_uploader.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class MediaDesktopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller=MediaController.instance;
     return Scaffold(
       body: SingleChildScrollView(child: Padding(padding: EdgeInsets.all(24),child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,15 +23,16 @@ class MediaDesktopScreen extends StatelessWidget {
 
               SizedBox(
                 width: 130*1.5 ,
-                child: ElevatedButton.icon(onPressed: (){},
+                child: ElevatedButton.icon(onPressed:   ()=> controller.showImagesUploaderSection.value=!controller.showImagesUploaderSection.value,
                 icon: Icon(Iconsax.cloud_add), label:Text('Upload Image')),
               )
             ],
           ),
-          SizedBox( height: 32,),
+          SizedBox( height: 32),
           MediaUploader(),
-
-          MediaContent()
+          SizedBox( height: 16),
+          MediaContent(),
+          
         ],
       ),),),
     );

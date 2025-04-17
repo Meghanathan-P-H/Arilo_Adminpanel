@@ -1,10 +1,9 @@
 import 'dart:io';
+import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/constants/shimmer_eff.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
-
-enum ImageType { network, file, memory, asset }
 
 class AriloRoundedImage extends StatelessWidget {
   const AriloRoundedImage({
