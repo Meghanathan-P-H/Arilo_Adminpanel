@@ -184,16 +184,16 @@ class MediaUploader extends StatelessWidget {
                                     .toList(),
                           ),
 
-                          const SizedBox(height: 32),
-                          AriloDeviceUtils.isMobileScreen(context)
-                              ? SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed:()=> controller.uploadImageConfirmation(),
-                                  child: const Text('Upload'),
-                                ),
-                              )
-                              : const SizedBox.shrink(),
+                            const SizedBox(height: 32),
+                            AriloDeviceUtils.isMobileScreen(context)
+                                ? SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed:()=> controller.uploadImageConfirmation(),
+                                    child: const Text('Upload'),
+                                  ),
+                                )
+                                : const SizedBox.shrink(),
                         ],
                       ),
                     ),

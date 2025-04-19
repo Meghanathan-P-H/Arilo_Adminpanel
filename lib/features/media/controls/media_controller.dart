@@ -1,13 +1,15 @@
 import 'dart:typed_data';
-
+import 'package:arilo_admin/features/media/controls/mediarepo.dart';
 import 'package:arilo_admin/features/media/models/image_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
+import 'package:arilo_admin/utils/constants/heper_text.dart';
 import 'package:arilo_admin/utils/popups/dialog.dart';
 import 'package:arilo_admin/utils/popups/full_screen_popups.dart';
 import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
+
 
 class MediaController extends GetxController {
   static MediaController get instance => Get.find();
@@ -23,6 +25,8 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allBrandImages = <ImageModel>[].obs;
   final RxList<ImageModel> allCategoryImages = <ImageModel>[].obs;
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
+
+  final MediaRepository mediaRepository = MediaRepository();
 
   Future<void> selectLocalImages() async {
     final files = await dropzoneViewController.pickFiles(
@@ -66,7 +70,7 @@ class MediaController extends GetxController {
 
   Future<void> uploadImages() async {
     try {
-      Get.back();
+      // Get.back();
       uploadImagesLoader();
 
       MediaCategory selectedCategory = selectedPath.value;
@@ -95,10 +99,26 @@ class MediaController extends GetxController {
       for (int i = selectedImagesToUpload.length - 1; i >= 0; i--) {
         var selectedImage = selectedImagesToUpload[i];
         final image = selectedImage.file!;
-        //upload Image to the Storage
 
-           
+        final ImageModel uploadImage = await mediaRepository
+            .uploadImageFileInStorage(
+              file: image,
+              path: getSelectedPath(),
+              imageName: selectedImage.filename,
+            );
+
+        uploadImage.mediaCategory = selectedCategory.name;
+
+        final id = await mediaRepository.uploadImageFileInDatabase(
+          uploadImage,
+        );
+
+        uploadImage.id = id;
+
+        selectedImagesToUpload.removeAt(i);
+        targetList.add(uploadImage);
       }
+      FullScreenLoader.stopLoading();
     } catch (e) {
       FullScreenLoader.stopLoading();
       ALoaders.showWarningSnackBar(
@@ -132,5 +152,29 @@ class MediaController extends GetxController {
             ),
           ),
     );
+  }
+
+  String getSelectedPath() {
+    String path = '';
+    switch (selectedPath.value) {
+      case MediaCategory.banners:
+        path = ATexts.bannersStoragePath;
+        break;
+      case MediaCategory.brands:
+        path = ATexts.brandsStoragePath;
+        break;
+      case MediaCategory.categories:
+        path = ATexts.categoriesStoragePath;
+        break;
+      case MediaCategory.products:
+        path = ATexts.productsStoragePath;
+        break;
+      case MediaCategory.users:
+        path = ATexts.usersStoragePath;
+        break;
+      default:
+        path = '';
+    }
+    return path;
   }
 }

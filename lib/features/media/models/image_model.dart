@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:arilo_admin/features/media/models/cloud_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:intl/intl.dart';
- import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 /// Model class representing image data.
 class ImageModel {
@@ -49,7 +49,30 @@ class ImageModel {
   String _formatDate(DateTime? date) {
     if (date == null) return '';
     return DateFormat('yyyy-MM-dd').format(date);
+
   }
+
+factory ImageModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
+      final data = document.data()!;
+
+      return ImageModel(
+        id: document.id,
+        url: data['url'] ?? '',
+        folder: data['folder'] ?? '',
+        filename: data['filename'] ?? '',
+        sizeBytes: data['sizeBytes'] ?? 0,
+        fullPath: data['fullPath'] ?? '',
+        createdAt: data['createdAt']?.toDate(),
+        updatedAt: data['updatedAt']?.toDate(),
+        contentType: data['contentType'] ?? '',
+        mediaCategory: data['mediaCategory'],
+      );
+    } else {
+      return ImageModel.empty();
+    }
+  }
+
 
   /// Convert to Json to Store in DB
   Map<String, dynamic> toJson() {
@@ -65,31 +88,24 @@ class ImageModel {
     };
   }
 
-  /// Convert Firestore Document to Model
 
-Future<void> saveImageDataToFirestore(String url, String folder, String filename) async {
-  final imageModel = ImageModel(
-    url: url,
-    folder: folder,
-    filename: filename,
-    createdAt: DateTime.now(),
-    mediaCategory: 'yourCategory',
-  );
 
-  await FirebaseFirestore.instance
-      .collection('images')
-      .add(imageModel.toJson());
-}
-
-Future<void> uploadAndSave(File imageFile) async {
-  final url = await uploadImageToCloudinary(imageFile);
-  if (url != null) {
-    final filename = imageFile.path.split('/').last;
-    await saveImageDataToFirestore(url, 'my_folder', filename);
-    print('✅ Uploaded & saved to Firestore!');
-  } else {
-    print('❌ Failed to upload to Cloudinary');
+factory ImageModel.fromFirebaseMetadata(
+    FullMetadata metadata,
+    String folder,
+    String filename,
+    String downloadUrl,
+  ) {
+    return ImageModel(
+      url: downloadUrl,
+      folder: folder,
+      filename: filename,
+      sizeBytes: metadata.size,
+      updatedAt: metadata.updated,
+      fullPath: metadata.fullPath,
+      createdAt: metadata.timeCreated,
+      contentType: metadata.contentType,
+    );
   }
-}
 
 }
