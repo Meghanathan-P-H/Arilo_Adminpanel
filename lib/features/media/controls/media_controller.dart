@@ -10,9 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:get/get.dart';
 
-
 class MediaController extends GetxController {
   static MediaController get instance => Get.find();
+
+  final RxBool loading = false.obs;
+
+  final int initialLoadCount = 20;
+  final int loadMoreCount = 25;
 
   late DropzoneViewController dropzoneViewController;
   final RxBool showImagesUploaderSection = false.obs;
@@ -27,6 +31,76 @@ class MediaController extends GetxController {
   final RxList<ImageModel> allUserImages = <ImageModel>[].obs;
 
   final MediaRepository mediaRepository = MediaRepository();
+
+  void getMediaImages() async {
+    try {
+      loading.value = true;
+
+      RxList<ImageModel> targetList = <ImageModel>[].obs;
+
+      if (selectedPath.value == MediaCategory.banners) {
+        targetList = allBannerImages;
+      } else if (selectedPath.value == MediaCategory.brands) {
+        targetList = allBrandImages;
+      } else if (selectedPath.value == MediaCategory.categories) {
+        targetList = allCategoryImages;
+      } else if (selectedPath.value == MediaCategory.products) {
+        targetList = allProductImages;
+      } else if (selectedPath.value == MediaCategory.users) {
+        targetList = allUserImages;
+      }
+
+      final images = await mediaRepository.fetchImagesFromDatabase(
+        selectedPath.value,
+        initialLoadCount,
+      );
+
+      targetList.assignAll(images);
+
+      loading.value = false;
+    } catch (e) {
+      loading.value = false;
+      ALoaders.showErrorSnackBar(
+        title: 'Oh Snap',
+        message: 'Unable to fletch Images,Something went wrong. Try again',
+      );
+    }
+  }
+  loadMoreMediaImages() async {
+    try {
+      loading.value = true;
+
+      RxList<ImageModel> targetList = <ImageModel>[].obs;
+
+      if (selectedPath.value == MediaCategory.banners) {
+        targetList = allBannerImages;
+      } else if (selectedPath.value == MediaCategory.brands) {
+        targetList = allBrandImages;
+      } else if (selectedPath.value == MediaCategory.categories) {
+        targetList = allCategoryImages;
+      } else if (selectedPath.value == MediaCategory.products) {
+        targetList = allProductImages;
+      } else if (selectedPath.value == MediaCategory.users) {
+        targetList = allUserImages;
+      }
+
+      final images = await mediaRepository.loadMoreImagesFromDatabase(
+        selectedPath.value,
+        initialLoadCount,
+        targetList.last.createdAt??DateTime.now()
+      );
+
+      targetList.assignAll(images);
+
+      loading.value = false;
+    } catch (e) {
+      loading.value = false;
+      ALoaders.showErrorSnackBar(
+        title: 'Oh Snap',
+        message: 'Unable to fletch Images,Something went wrong. Try again',
+      );
+    }
+  }
 
   Future<void> selectLocalImages() async {
     final files = await dropzoneViewController.pickFiles(
@@ -109,9 +183,7 @@ class MediaController extends GetxController {
 
         uploadImage.mediaCategory = selectedCategory.name;
 
-        final id = await mediaRepository.uploadImageFileInDatabase(
-          uploadImage,
-        );
+        final id = await mediaRepository.uploadImageFileInDatabase(uploadImage);
 
         uploadImage.id = id;
 
