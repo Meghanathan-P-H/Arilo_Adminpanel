@@ -57,6 +57,7 @@ class AriloSideBar extends StatelessWidget {
                   // Sidebar menu items
                   AriloMenu(route: AriloRoute.dashboard, icon: Iconsax.status, itemName: 'Dashboard'),
                   AriloMenu(route: AriloRoute.media, icon: Iconsax.image, itemName: 'Media'),
+                  AriloMenu(route: AriloRoute.categories, icon: Iconsax.category_2, itemName: 'Category'),
                  
                 ],
               ),

@@ -4,5 +4,9 @@ class AriloRoute {
   static const dashboard = '/dashboard';
   static const media = '/media';
 
-  static List sidebarMenuItems = [dashboard];
+  static const categories = '/categories';
+  static const createCategory = '/createCategory';
+  static const editCategory = '/editCategory';
+
+  static List sidebarMenuItems = [dashboard,media,categories];
 }
