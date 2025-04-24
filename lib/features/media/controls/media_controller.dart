@@ -3,6 +3,7 @@ import 'package:arilo_admin/features/media/controls/mediarepo.dart';
 import 'package:arilo_admin/features/media/models/image_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/constants/heper_text.dart';
+import 'package:arilo_admin/utils/popups/circularindi.dart';
 import 'package:arilo_admin/utils/popups/dialog.dart';
 import 'package:arilo_admin/utils/popups/full_screen_popups.dart';
 import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
@@ -66,6 +67,7 @@ class MediaController extends GetxController {
       );
     }
   }
+
   loadMoreMediaImages() async {
     try {
       loading.value = true;
@@ -87,7 +89,7 @@ class MediaController extends GetxController {
       final images = await mediaRepository.loadMoreImagesFromDatabase(
         selectedPath.value,
         initialLoadCount,
-        targetList.last.createdAt??DateTime.now()
+        targetList.last.createdAt ?? DateTime.now(),
       );
 
       targetList.assignAll(images);
@@ -248,5 +250,69 @@ class MediaController extends GetxController {
         path = '';
     }
     return path;
+  }
+
+  void removeCloudImageConfirmation(ImageModel image) {
+    ADialogs.defaultDialog(
+      context: Get.context!,
+      title: 'Delete Image',
+      confirmText: 'Delete',
+      onConfirm: () {
+        removeCloudImage(image);
+      },
+      content: 'Are you sure you want to delete this Images?',
+    );
+  }
+
+  void removeCloudImage(ImageModel image) async {
+    try {
+      Get.back();
+
+      Get.defaultDialog(
+        title: '',
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        content: const PopScope(
+          child: SizedBox(
+            width: 150,
+            height: 150,
+            child: BlackCircularProgressIndicator(),
+          ),
+        ),
+      );
+
+      await mediaRepository.deleteFileFromStorage(image);
+
+      RxList<ImageModel> targetList;
+
+      switch (selectedPath.value) {
+        case MediaCategory.banners:
+          targetList = allBannerImages;
+          break;
+        case MediaCategory.brands:
+          targetList = allBrandImages;
+          break;
+        case MediaCategory.categories:
+          targetList = allCategoryImages;
+          break;
+        case MediaCategory.products:
+          targetList = allProductImages;
+          break;
+        default:
+          return;
+      }
+
+      targetList.remove(image);
+      update();
+
+      FullScreenLoader.stopLoading();
+      ALoaders.showSuccessSnackBar(
+        title: 'Image Deleted',
+        message: 'Image successfully deleted from your cloud storage',
+      );
+    } catch (e) {
+      FullScreenLoader.stopLoading();
+      ALoaders.showErrorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BlackCircularProgressIndicator extends StatelessWidget {
-  final String content;
+  final String? content;
 
-  const BlackCircularProgressIndicator({super.key, required this.content});
+  const BlackCircularProgressIndicator({super.key,this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class BlackCircularProgressIndicator extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            content,
+            content??'',
             style: const TextStyle(
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 16,

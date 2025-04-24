@@ -70,8 +70,6 @@ class MediaRepository extends GetxController {
     int loadCount,
   ) async {
     try {
-     
-
       final querySnapshot =
           await FirebaseFirestore.instance
               .collection('Images')
@@ -80,7 +78,7 @@ class MediaRepository extends GetxController {
               .limit(loadCount)
               .get();
 
-      // If zero results,is this 
+      // If zero results,is this
       if (querySnapshot.docs.isEmpty) {
         print(
           "No images found. Checking if any images exist without filtering...",
@@ -112,7 +110,6 @@ class MediaRepository extends GetxController {
     DateTime lastFetchedDate,
   ) async {
     try {
-      
       String lastFetchedDateString = lastFetchedDate.toIso8601String();
 
       final querySnapshot =
@@ -128,6 +125,22 @@ class MediaRepository extends GetxController {
     } on FirebaseException catch (e) {
       print('Firebase error: ${e.message}');
       throw e.message ?? 'Firebase error occurred';
+    } catch (e) {
+      print('Unexpected error: $e');
+      throw 'An unexpected error occurred: $e';
+    }
+  }
+
+  Future<void> deleteFileFromStorage(ImageModel image) async {
+    try {
+      await FirebaseStorage.instance.ref(image.fullPath).delete();
+      await FirebaseFirestore.instance
+          .collection('Images')
+          .doc(image.id)
+          .delete();
+    } on FirebaseException catch (e) {
+      print('Firebase error: ${e.message}');
+      throw e.message ?? 'Something went wrong while deleting image';
     } catch (e) {
       print('Unexpected error: $e');
       throw 'An unexpected error occurred: $e';
