@@ -1,5 +1,5 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
-import 'package:arilo_admin/features/shop/controllers/dashbord_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/dashboard_controller/dashbord_controller.dart';
 import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/device/device_utility.dart';
 import 'package:fl_chart/fl_chart.dart';

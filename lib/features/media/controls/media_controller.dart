@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 import 'package:arilo_admin/features/media/controls/mediarepo.dart';
 import 'package:arilo_admin/features/media/models/image_model.dart';
+import 'package:arilo_admin/features/media/screen/widgets/media_content.dart';
+import 'package:arilo_admin/features/media/screen/widgets/media_uploader.dart';
+import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/constants/heper_text.dart';
 import 'package:arilo_admin/utils/popups/circularindi.dart';
@@ -314,5 +317,37 @@ class MediaController extends GetxController {
       FullScreenLoader.stopLoading();
       ALoaders.showErrorSnackBar(title: 'Oh Snap', message: e.toString());
     }
+  }
+
+  Future<List<ImageModel>?> selectImagesFromMedia({
+    List<String>? selectedUrls,
+    bool allowSelection = true,
+    bool multipleSelection = false,
+  }) async {
+    showImagesUploaderSection.value = true;
+
+    List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
+      isScrollControlled: true,
+      backgroundColor: AriloColors.secondary,
+      FractionallySizedBox(
+        heightFactor: 1,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: [
+                MediaUploader(),
+                MediaContent(
+                  allowSelection: allowSelection,
+                  alreadySelectedUrls: selectedUrls ?? [],
+                  allowMultipleSelection: multipleSelection,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    return selectedImages;
   }
 }

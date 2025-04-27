@@ -1,16 +1,19 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
+import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/table/data_table.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/widgets/bar_graph.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/widgets/card_widget.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/widgets/order_status_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:arilo_admin/utils/constants/colors.dart';
+import 'package:get/get.dart';
 
 class DashboardDesk extends StatelessWidget {
   const DashboardDesk({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductImageController());
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F8),
       body: SingleChildScrollView(
@@ -27,6 +30,15 @@ class DashboardDesk extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: AriloColors.textPrimary,
                 ),
+              ),
+              ElevatedButton(
+                onPressed: ()=>controller.selectThumbnailImage(),
+                child: Text('select single image'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: ()=>controller.selectMultipleProductImage() ,
+                child: Text('select multiple image'),
               ),
               const SizedBox(height: 16),
 
@@ -82,7 +94,6 @@ class DashboardDesk extends StatelessWidget {
                     flex: 2,
                     child: Column(
                       children: [
-
                         BarGraph(),
 
                         const SizedBox(height: 16),
