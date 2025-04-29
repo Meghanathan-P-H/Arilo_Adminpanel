@@ -5,7 +5,7 @@ class AriloPageHeadingBredCrumb extends StatelessWidget {
   const AriloPageHeadingBredCrumb({
     super.key,
     required this.heading,
-    this.rightSideWidget  
+    this.rightSideWidget    
   });
 
   final String heading;

@@ -8,5 +8,13 @@ class AriloRoute {
   static const createCategory = '/createCategory';
   static const editCategory = '/editCategory';
 
-  static List sidebarMenuItems = [dashboard,media,categories];
+  static const brand = '/brand';
+  static const createBrand = '/createBrand';
+  static const editBrand = '/editBrand';
+
+  static const banner = '/banners';
+  static const createBanner = '/createBanner';
+  static const editBanner = '/editBanner';
+
+  static List sidebarMenuItems = [dashboard, media, categories,brand];
 }

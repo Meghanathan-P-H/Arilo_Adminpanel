@@ -2,7 +2,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class ImageUploader extends StatelessWidget {
-  const ImageUploader({
+  const 
+  ImageUploader({
     super.key,
     required this.image,
     this.onIconButtonPressed,

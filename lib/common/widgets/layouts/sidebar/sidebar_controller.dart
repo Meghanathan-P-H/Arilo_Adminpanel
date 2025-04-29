@@ -26,4 +26,4 @@ class SidebarController extends GetxController {
     }
   }
 }
-// ///ivda route initialize cheythilla atha preshnam so please check screeshot
+// ///ivda route initialize cheythilla atha preshnam so please after 
