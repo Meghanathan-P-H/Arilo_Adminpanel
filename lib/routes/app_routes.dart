@@ -1,6 +1,9 @@
 import 'package:arilo_admin/features/authentication/screens/login/frogot_success.dart';
 import 'package:arilo_admin/features/authentication/screens/login/login.dart';
 import 'package:arilo_admin/features/media/screen/media.dart';
+import 'package:arilo_admin/features/shop/screens/banner/all_banners/banners.dart';
+import 'package:arilo_admin/features/shop/screens/banner/create_%20banners/create_banner.dart';
+import 'package:arilo_admin/features/shop/screens/banner/edit_banners/edit_banner.dart';
 import 'package:arilo_admin/features/shop/screens/brand/all_brands/brand.dart';
 import 'package:arilo_admin/features/shop/screens/brand/create_brand/create_brand.dart';
 import 'package:arilo_admin/features/shop/screens/brand/edit_brand/edit_brand.dart';
@@ -26,6 +29,10 @@ class AriloAppRoute {
     GetPage(name: AriloRoute.brand, page: ()=> BrandScreen(),middlewares: [AriloRouteMiddleWare()]),  
     GetPage(name: AriloRoute.createBrand, page: ()=> CreateBrandScreen(),middlewares: [AriloRouteMiddleWare()]),  
     GetPage(name: AriloRoute.editBrand, page: ()=> EditBrandScreen(),middlewares: [AriloRouteMiddleWare()]),  
+
+    GetPage(name: AriloRoute.banner, page: ()=> BannersScreen(),middlewares: [AriloRouteMiddleWare()]),  
+    GetPage(name: AriloRoute.createBanner, page: ()=> CreateBannerScreen(),middlewares: [AriloRouteMiddleWare()]),  
+    GetPage(name: AriloRoute.editBanner, page: ()=> EditBanner(),middlewares: [AriloRouteMiddleWare()]),  
 
   ];
 }
