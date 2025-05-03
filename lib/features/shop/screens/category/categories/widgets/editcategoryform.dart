@@ -2,70 +2,84 @@ import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
 import 'package:arilo_admin/features/shop/screens/category/categories/widgets/Image_uploader.dart';
 import 'package:arilo_admin/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class Editcategoryform extends StatelessWidget {
   const Editcategoryform({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ARoundedContainer(
-      width: 500,
-      padding: EdgeInsets.all(24),
+     return ARoundedContainer(
+      width: 400,
+      padding: const EdgeInsets.all(24),
       child: Form(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 8),
-            Text(
-              'Update Category',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const Text(
+              'Update Categories',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 32),
-            
-            TextFormField(validator: (value)=>AriloValidator.validateEmptyText('name', value),decoration: const InputDecoration(
-              labelText: "Category Name",
-              prefixIcon: Icon(Iconsax.category )
-            ),),
-            SizedBox(height: 16),
-            DropdownButtonFormField(
+            const SizedBox(height: 24),
+
+            ImageUploader(
+              width: 120,
+              height: 120,
+              image: 'assets/images/imagedefulticon.png',
+              circular: false,
+              onIconButtonPressed: () {},
+            ),
+
+            const SizedBox(height: 8),
+            const Text(
+              'Select Image Icon',
+              style: TextStyle(color: Colors.grey),
+            ),
+
+            const SizedBox(height: 24),
+
+            TextFormField(
+              validator: (value) =>
+                  AriloValidator.validateEmptyText('name', value),
               decoration: const InputDecoration(
-                hintText: "Parent Category",
-                labelText: 'Parent Category',
-                prefixIcon: Icon(Iconsax.bezier),
-              ),
-              onChanged: (newValue) {},
-              items: [
-                DropdownMenuItem(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [Text('Item.Name')],
-                  ),
+                hintText: 'Category Name',
+                filled: true,
+                fillColor: Color(0xFFF7F7F7),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  borderSide: BorderSide.none,
                 ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+
+            Row(
+              children: [
+                Checkbox(value: false, onChanged: (value) {}),
+                const Text('Active'),
               ],
             ),
 
             const SizedBox(height: 32),
-            ImageUploader(
-              width: 80,
-              height: 80,
-              image: 'assets/images/imagedefulticon.png',
-              circular: true,
-              onIconButtonPressed: () {},
-              left: 0,
-              top: 0,
-            ),
 
-            const SizedBox(height: 16,),
-
-            CheckboxMenuButton(value: true, onChanged: (value){},child: Text('Featured'),),
-             const SizedBox(height: 32),
-            
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(onPressed: (){}, child: const Text('Create')),
-            )
-             
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF000000), 
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text(
+                  'Update',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),

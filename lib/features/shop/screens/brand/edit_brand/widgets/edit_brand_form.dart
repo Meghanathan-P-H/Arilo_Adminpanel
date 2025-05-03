@@ -55,6 +55,7 @@ class EditBrandForm extends StatelessWidget {
             ImageUploader(
               width: 80,
               height: 80,
+              circular: true,
               image: 'assets/images/imagedefulticon.png',
               onIconButtonPressed: () {},
             ),

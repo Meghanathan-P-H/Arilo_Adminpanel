@@ -56,6 +56,7 @@ class CreateBrandForm extends StatelessWidget {
               width: 80,
               height: 80,
               image: 'assets/images/imagedefulticon.png',
+              circular: true,
               onIconButtonPressed: () {},
             ),
             const SizedBox(height: 16),

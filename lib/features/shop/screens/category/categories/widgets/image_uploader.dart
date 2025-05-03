@@ -2,8 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class ImageUploader extends StatelessWidget {
-  const 
-  ImageUploader({
+  const ImageUploader({
     super.key,
     required this.image,
     this.onIconButtonPressed,
@@ -12,11 +11,10 @@ class ImageUploader extends StatelessWidget {
     this.height = 100,
     this.circular = false,
     this.icon = Icons.edit,
-    this.top,
-    this.bottom = 0,
-    this.right,
-    this.left = 0,
+    this.buttonPosition = ButtonPosition.bottomRight,
+    this.buttonOffset = 8, 
     this.isMemoryImage = false,
+    this.fit = BoxFit.cover,
   });
 
   final bool circular;
@@ -26,51 +24,80 @@ class ImageUploader extends StatelessWidget {
   final double height;
   final Uint8List? memoryImage;
   final IconData icon;
-  final double? top;
-  final double? bottom;
-  final double? right;
-  final double? left;
+  final ButtonPosition buttonPosition;
+  final double buttonOffset;
+  final BoxFit fit;
   final VoidCallback? onIconButtonPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(circular ? width / 2 : 12),
-          child: isMemoryImage
-              ? Image.memory(
-                  memoryImage!,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.contain,
-                )
-              : Image.network(
-                  image,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.contain,
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Stack(
+        clipBehavior: Clip.none, 
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(circular ? width / 2 : 12),
+            child: isMemoryImage
+                ? Image.memory(
+                    memoryImage!,
+                    width: width,
+                    height: height,
+                    fit: fit,
+                  )
+                : Image.network(
+                    image,
+                    width: width,
+                    height: height,
+                    fit: fit,
+                  ),
+          ),
+
+          // Positioned Button
+          Positioned(
+            top: buttonPosition == ButtonPosition.topLeft || 
+                 buttonPosition == ButtonPosition.topRight
+                ? -buttonOffset
+                : null,
+            bottom: buttonPosition == ButtonPosition.bottomLeft || 
+                    buttonPosition == ButtonPosition.bottomRight
+                ? -buttonOffset
+                : null,
+            left: buttonPosition == ButtonPosition.topLeft || 
+                  buttonPosition == ButtonPosition.bottomLeft
+                ? -buttonOffset
+                : null,
+            right: buttonPosition == ButtonPosition.topRight || 
+                   buttonPosition == ButtonPosition.bottomRight
+                ? -buttonOffset
+                : null,
+            child: GestureDetector(
+              onTap: onIconButtonPressed,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2),
                 ),
-        ),
-        Positioned(
-          top: top,
-          left: left,
-          right: right,
-          bottom: bottom,
-          child: GestureDetector(
-            onTap: onIconButtonPressed,
-            child: CircleAvatar(
-              radius: 16,
-              backgroundColor: Colors.black54,
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 18,
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 16,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+}
+
+enum ButtonPosition {
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight
 }
