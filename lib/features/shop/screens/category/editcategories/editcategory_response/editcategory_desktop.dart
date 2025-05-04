@@ -22,7 +22,7 @@ class EditcategoryDesktop extends StatelessWidget {
                 breadcrumbItems: ['Update Category'],
               ),
               SizedBox(height: 32,),
-              Editcategoryform()
+              Editcategoryform(category: category,)
           ],
         ),),
       ),

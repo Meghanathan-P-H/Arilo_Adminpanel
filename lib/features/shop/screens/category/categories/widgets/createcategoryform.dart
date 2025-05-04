@@ -1,17 +1,22 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
+import 'package:arilo_admin/features/shop/controllers/category_controller/create_category_controller.dart';
 import 'package:arilo_admin/features/shop/screens/category/categories/widgets/Image_uploader.dart';
 import 'package:arilo_admin/utils/validators/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CreateCategoryForm extends StatelessWidget {
   const CreateCategoryForm({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final createController = Get.put(CreateCategoryController());
+
     return ARoundedContainer(
       width: 400,
       padding: const EdgeInsets.all(24),
       child: Form(
+        key: createController.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -21,12 +26,19 @@ class CreateCategoryForm extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            ImageUploader(
-              width: 120,
-              height: 120,
-              image: 'assets/images/imagedefulticon.png',
-              circular: false,
-              onIconButtonPressed: () {},
+            Obx(
+              () => ImageUploader(
+                width: 120,
+                height: 120,
+                image:
+                    createController.imageURL.value.isNotEmpty
+                        ? createController.imageURL.value
+                        : 'assets/images/imagedefulticon.png',
+                circular: false,
+                onIconButtonPressed:
+                    () =>
+                        createController.pickImage(), //image type if we can add
+              ),
             ),
 
             const SizedBox(height: 8),
@@ -38,8 +50,9 @@ class CreateCategoryForm extends StatelessWidget {
             const SizedBox(height: 24),
 
             TextFormField(
-              validator: (value) =>
-                  AriloValidator.validateEmptyText('name', value),
+              controller: createController.name,
+              validator:
+                  (value) => AriloValidator.validateEmptyText('name', value),
               decoration: const InputDecoration(
                 hintText: 'Category Name',
                 filled: true,
@@ -53,22 +66,27 @@ class CreateCategoryForm extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-
             Row(
               children: [
-                Checkbox(value: false, onChanged: (value) {}),
+                Obx(
+                  () => Checkbox(
+                    value: createController.isFeatured.value,
+                    onChanged:
+                        (value) =>
+                            createController.isFeatured.value = value ?? false,
+                  ),
+                ),
                 const Text('Active'),
               ],
             ),
 
             const SizedBox(height: 32),
-
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => createController.createCategory(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF000000), 
+                  backgroundColor: const Color(0xFF000000),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

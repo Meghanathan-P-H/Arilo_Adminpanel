@@ -3,7 +3,6 @@ import 'package:arilo_admin/features/media/controls/mediarepo.dart';
 import 'package:arilo_admin/features/media/models/image_model.dart';
 import 'package:arilo_admin/features/media/screen/widgets/media_content.dart';
 import 'package:arilo_admin/features/media/screen/widgets/media_uploader.dart';
-import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/constants/heper_text.dart';
 import 'package:arilo_admin/utils/popups/circularindi.dart';
@@ -328,7 +327,7 @@ class MediaController extends GetxController {
 
     List<ImageModel>? selectedImages = await Get.bottomSheet<List<ImageModel>>(
       isScrollControlled: true,
-      backgroundColor: AriloColors.secondary,
+      backgroundColor: const Color(0xFFF6F6F9),
       FractionallySizedBox(
         heightFactor: 1,
         child: SingleChildScrollView(

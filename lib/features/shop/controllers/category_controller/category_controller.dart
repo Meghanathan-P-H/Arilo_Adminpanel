@@ -4,6 +4,7 @@ import 'package:arilo_admin/utils/popups/circularindi.dart';
 import 'package:arilo_admin/utils/popups/full_screen_popups.dart';
 import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
@@ -103,25 +104,21 @@ class CategoryController extends GetxController {
   }
 
   deleteOnConfirm(CategoryModel category) async {
-    try{
+    try {
+      Navigator.of(Get.context!).pop();
+      BlackCircularProgressIndicator();
+
+      await _categoryRepo.deleteCategory(category.id);
+      removeItemFromLists(category);
       FullScreenLoader.stopLoading();
-
-    BlackCircularProgressIndicator();
-
-    await _categoryRepo.deleteCategory(category.id);
-    removeItemFromLists(category);
-    FullScreenLoader.stopLoading();
-    ALoaders.showSuccessSnackBar(
-      title: "Item Deleted",
-      message: 'Your Item has been Deleted',
-    ); 
-    }catch(e){
-         FullScreenLoader.stopLoading();
-    ALoaders.showErrorSnackBar(
-      title: "Oh Snap",
-      message: e.toString(),
-    ); 
-    } 
+      ALoaders.showSuccessSnackBar(
+        title: "Item Deleted",
+        message: 'Your Item has been Deleted',
+      );
+    } catch (e) {
+      Navigator.of(Get.context!).pop();
+      ALoaders.showErrorSnackBar(title: "Oh Snap", message: e.toString());
+    }
   }
 
   void removeItemFromLists(CategoryModel item) {
@@ -130,5 +127,23 @@ class CategoryController extends GetxController {
     selectedRows.assignAll(List.generate(allItems.length, (index) => false));
 
     update();
+  }
+
+  void addItemToLists(CategoryModel item) {
+    allItems.add(item);
+    filteredItems.add(item);
+    selectedRows.assignAll(List.generate(allItems.length, (index) => false));
+
+    allItems.refresh();
+  }
+
+  void updateItemFromList(CategoryModel item) {
+    final itemIndex = allItems.indexWhere((i) => i == item);
+    final filteredItemIndex = filteredItems.indexWhere((i) => i == item);
+
+    if (itemIndex != -1) allItems[itemIndex] = item;
+    if (filteredItemIndex != -1) filteredItems[itemIndex] = item;
+
+    filteredItems.refresh();
   }
 }

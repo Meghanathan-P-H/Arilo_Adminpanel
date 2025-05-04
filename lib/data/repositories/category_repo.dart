@@ -28,9 +28,44 @@ class CategoryRepository extends GetxController {
     }
   }
 
+  Future<String> createCategory(CategoryModel category) async {
+    try {
+      final data = await _db.collection("Categories").add(category.toJson());
+      return data.id;
+    } on FirebaseAuthException catch (e) {
+      throw 'Authentication error: ${e.message}';
+    } on FirebaseException catch (e) {
+      throw 'Firestore error: ${e.message}';
+    } on FormatException catch (_) {
+      throw 'Invalid data format';
+    } on PlatformException catch (e) {
+      throw 'Platform error: ${e.message}';
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
   Future<void> deleteCategory(String categoryid) async {
     try {
       await _db.collection("Categories").doc(categoryid).delete();
+    } on FirebaseAuthException catch (e) {
+      throw 'Authentication error: ${e.message}';
+    } on FirebaseException catch (e) {
+      throw 'Firestore error: ${e.message}';
+    } on FormatException catch (_) {
+      throw 'Invalid data format';
+    } on PlatformException catch (e) {
+      throw 'Platform error: ${e.message}';
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  
+
+    Future<void> updateCategory(CategoryModel category) async {
+    try {
+      await _db.collection("Categories").doc(category.id).update(category.toJson());
     } on FirebaseAuthException catch (e) {
       throw 'Authentication error: ${e.message}';
     } on FirebaseException catch (e) {

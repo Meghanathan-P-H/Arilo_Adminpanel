@@ -51,8 +51,8 @@ class CategoryRows extends DataTableSource {
 
         DataCell(
           category.isFeatured
-              ? const Icon(Iconsax.heart5, color: AriloColors.primary)
-              : const Icon(Iconsax.heart),
+              ? const Icon(Iconsax.heart5, color: Colors.red)
+              : const Icon(Iconsax.heart,color: Colors.grey,),
         ),
         DataCell(Text(category.createdAt==null?'':category.createdFormattedDate)),
         DataCell(

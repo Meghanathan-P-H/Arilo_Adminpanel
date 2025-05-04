@@ -35,6 +35,7 @@ class MediaContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -230,6 +231,7 @@ class MediaContent extends StatelessWidget {
           width: 140,
           height: 140,
           padding: 8,
+          image: image.url,
           imageType: ImageType.network,
           margin: 8,
           backgroundColor: AriloColors.textSecondary,

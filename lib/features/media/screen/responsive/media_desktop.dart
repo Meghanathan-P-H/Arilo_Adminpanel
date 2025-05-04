@@ -12,6 +12,7 @@ class MediaDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller=MediaController.instance;
     return Scaffold(
+      backgroundColor: const Color(0xFFF6F6F9),
       body: SingleChildScrollView(child: Padding(padding: EdgeInsets.all(24),child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

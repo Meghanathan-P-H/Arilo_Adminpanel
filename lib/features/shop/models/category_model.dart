@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryModel {
-  final String id;
-  final String name;
-  final String image;
+  String id;
+  String name;
+  String image;
   bool isFeatured;
   DateTime? createdAt;
   DateTime? updatedAt;
