@@ -1,5 +1,6 @@
 import 'package:arilo_admin/features/media/controls/media_controller.dart';
 import 'package:arilo_admin/features/media/models/image_model.dart';
+import 'package:arilo_admin/features/products/models/product_variation_model.dart';
 import 'package:get/get.dart';
 
 
@@ -18,6 +19,15 @@ class ProductImageController extends GetxController {
       selectedThumblineImageUrl.value = selectedImage.url;
     }
   }
+
+  void selectVariationImage(ProductVariationModel variation) async {
+    final controller = Get.put(MediaController());
+    List<ImageModel>? selectedImages = await controller.selectImagesFromMedia();
+    if (selectedImages != null && selectedImages.isNotEmpty) {
+        ImageModel selectedImage = selectedImages.first;
+        variation.image.value = selectedImage.url;
+    }
+}
 
   void selectMultipleProductImage() async {
     final controller = Get.put(MediaController());

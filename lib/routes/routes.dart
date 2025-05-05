@@ -16,5 +16,9 @@ class AriloRoute {
   static const createBanner = '/createBanner';
   static const editBanner = '/editBanner';
 
-  static List sidebarMenuItems = [dashboard, media, categories,brand];
+  static const product = '/product';
+  static const createProduct = '/createProduct';
+  static const editProduct = '/editProduct';
+
+  static List sidebarMenuItems = [dashboard, media, categories,brand,product];
 }
