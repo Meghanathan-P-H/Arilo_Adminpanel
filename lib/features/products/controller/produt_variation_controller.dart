@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductVariationController extends GetxController {
-  // Singleton instance
+
   static ProductVariationController get instance => Get.find();
 
-  // Observables for loading state and product variations
+
   final isLoading = false.obs;
   final RxList<ProductVariationModel> productVariations =
       <ProductVariationModel>[].obs;
 
-  // Lists to store controllers for each variation attribute
+ 
   List<Map<ProductVariationModel, TextEditingController>> stockControllersList =
       [];
   List<Map<ProductVariationModel, TextEditingController>> priceControllersList =
@@ -23,7 +23,7 @@ class ProductVariationController extends GetxController {
   List<Map<ProductVariationModel, TextEditingController>>
   descriptionControllersList = [];
 
-  // Instance of ProductAttributesController
+
   final attributesController = Get.put(ProductAttributesController());
 
   void initializeVariationControllers(List<ProductVariationModel> variations) {
@@ -119,8 +119,7 @@ class ProductVariationController extends GetxController {
         variations.add(variation);
       }
 
-      // Create controllers
-      // Initialize controller maps for each variation property
+
       final Map<ProductVariationModel, TextEditingController> stockControllers =
           {};
       final Map<ProductVariationModel, TextEditingController> priceControllers =
@@ -130,7 +129,7 @@ class ProductVariationController extends GetxController {
       final Map<ProductVariationModel, TextEditingController>
       descriptionControllers = {};
 
-      // Create controllers for each variation
+
       for (final variation in variations) {
         stockControllers[variation] = TextEditingController();
         priceControllers[variation] = TextEditingController();
@@ -138,7 +137,7 @@ class ProductVariationController extends GetxController {
         descriptionControllers[variation] = TextEditingController();
       }
 
-      // Add the maps to their respective lists (assuming these lists are declared elsewhere)
+
       stockControllersList.add(stockControllers);
       priceControllersList.add(priceControllers);
       salePriceControllersList.add(salePriceControllers);
@@ -154,7 +153,7 @@ class ProductVariationController extends GetxController {
     return result;
   }
 
-  // Helper function to recursively combine attribute values
+ 
   void combine(
     List<List<String>> lists,
     int index,

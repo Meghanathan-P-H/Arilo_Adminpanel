@@ -27,7 +27,6 @@ class ProductController extends AriloBaseController<ProductModel> {
     await _productRepository.deleteProduct(item);
   }
 
-  /// Sorting related code
   void sortByName(int sortColumnIndex, bool ascending) {
     sortByProperty(
       sortColumnIndex,
@@ -36,7 +35,7 @@ class ProductController extends AriloBaseController<ProductModel> {
     );
   }
 
-  /// Sorting related code
+
   void sortByPrice(int sortColumnIndex, bool ascending) {
     sortByProperty(
       sortColumnIndex,
@@ -45,7 +44,7 @@ class ProductController extends AriloBaseController<ProductModel> {
     );
   }
 
-  /// Sorting related code
+
   void sortByStock(int sortColumnIndex, bool ascending) {
     sortByProperty(
       sortColumnIndex,
@@ -54,7 +53,6 @@ class ProductController extends AriloBaseController<ProductModel> {
     );
   }
 
-  /// Sorting related code
   void sortBySoldItems(int sortColumnIndex, bool ascending) {
     sortByProperty(
       sortColumnIndex,
@@ -84,11 +82,12 @@ class ProductController extends AriloBaseController<ProductModel> {
           largestPrice = priceToConsider;
         }
       }
-      //doubt here
+
       if (smallestPrice.isEqual(largestPrice)) {
         return largestPrice.toString();
       } else {
-        // Otherwise return a price range
+        
+        
         return '$smallestPrice - \$$largestPrice';
       }
     }
@@ -104,21 +103,22 @@ class ProductController extends AriloBaseController<ProductModel> {
     return '${percentage.toStringAsFixed(0)}%';
 }
 
-/// -- Calculate Product Stock
+
+
 String getProductStockTotal(ProductModel product) {
     return product.productType == ProductType.single.toString()
         ? product.stock.toString()
         : product.productVariations!.fold<int>(0, (previousValue, element) => previousValue + element.stock).toString();
 }
 
-/// -- Calculate Product Sold Quantity
+
 String getProductSoldQuantity(ProductModel product) {
     return product.productType == ProductType.single.toString()
         ? product.soldQuantity.toString()
         : product.productVariations!.fold<int>(0, (previousValue, element) => previousValue + element.soldQuantity).toString();
 }
 
-/// -- Check Product Stock Status
+
 String getProductStockStatus(ProductModel product) {
     return product.stock > 0 ? 'In Stock' : 'Out of Stock';
 }

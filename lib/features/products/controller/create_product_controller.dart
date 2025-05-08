@@ -8,7 +8,8 @@ import 'package:arilo_admin/features/products/models/product_model.dart';
 import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
 import 'package:arilo_admin/features/shop/models/category_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
-import 'package:arilo_admin/utils/popups/circularindi.dart';
+import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,7 +45,7 @@ class CreateProductController extends GetxController {
 
   Future<void> createProduct() async {
     try {
-      BlackCircularProgressIndicator();
+      showProgressDialog();
 
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
@@ -105,12 +106,12 @@ class CreateProductController extends GetxController {
         variations.value = [];
       }
 
-      // Map Product Data to ProductModel
       final newRecord = ProductModel(
         id: '',
         sku: '',
         isFeatured: true,
         title: title.text.trim(),
+        // brand: selectedBrand.value,
         productVariations: variations,
         description: description.text.trim(),
         productType: productType.value.toString(),
@@ -144,8 +145,121 @@ class CreateProductController extends GetxController {
 
       ProductController.instance.addItemToLists(newRecord);
       Navigator.of(Get.context!).pop();
+
+      showCompletionDialog();
     } catch (e) {
-      
+      Navigator.of(Get.context!).pop();
+      ALoaders.showErrorSnackBar(title: 'Oh Snap', message: e.toString());
     }
+  }
+
+  void resetValues() {
+    isLoading.value = false;
+    productType.value = ProductType.single;
+    productVisibility.value = ProductVisibility.hidden;
+    stockPriceFormKey.currentState?.reset();
+    titleDescriptionFormKey.currentState?.reset();
+    title.clear();
+    description.clear();
+    stock.clear();
+    price.clear();
+    salePrice.clear();
+    brandTextField.clear();
+    // selectedBrand.value = null;
+    selectedCategories.clear();
+    ProductVariationController.instance.resetAllValues();
+    ProductAttributesController.instance.resetProductAttributes();
+
+    thumbnailUploader.value = false;
+    additionalImagesUploader.value = false;
+    productDataUploader.value = false;
+    categoriesRelationshipUploader.value = false;
+  }
+
+  void showProgressDialog() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder:
+          (context) => PopScope(
+            canPop: false,
+            child: AlertDialog(
+              title: const Text('Creating Product'),
+              content: Obx(
+                () => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('', height: 200, width: 200),
+                    const SizedBox(height: 16),
+                    buildCheckbox('Thumbnail Image', thumbnailUploader),
+                    buildCheckbox(
+                      'Additional Images',
+                      additionalImagesUploader,
+                    ),
+                    buildCheckbox(
+                      'Product Data, Attributes & Variations',
+                      productDataUploader,
+                    ),
+                    buildCheckbox(
+                      'Product Categories',
+                      categoriesRelationshipUploader,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('Sit Tight, Your product is uploading...'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+    );
+  }
+
+  Widget buildCheckbox(String label, RxBool value) {
+    return Row(
+      children: [
+        AnimatedSwitcher(
+          duration: const Duration(seconds: 2),
+          child:
+              value.value
+                  ? const Icon(
+                    CupertinoIcons.checkmark_alt_circle_fill,
+                    color: Colors.blue,
+                  )
+                  : const Icon(CupertinoIcons.checkmark_alt_circle),
+        ),
+        const SizedBox(width: 16),
+        Text(label),
+      ],
+    );
+  }
+
+  void showCompletionDialog() {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Congratulations'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
+            child: const Text('Go to Products'),
+          ),
+        ],
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('', height: 200, width: 200),
+            const SizedBox(height: 16),
+            Text(
+              'Congratulations',
+              style: Theme.of(Get.context!).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 16),
+            const Text('Your Product has been Created'),
+          ],
+        ),
+      ),
+    );
   }
 }
