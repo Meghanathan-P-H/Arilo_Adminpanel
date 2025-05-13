@@ -91,6 +91,9 @@ flutter:
     - assets/images/shoes.png
     - assets/images/defultImagecolors.png
     - assets/logos/loding.json
+    - assets/logos/datas_loading.json
+    
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

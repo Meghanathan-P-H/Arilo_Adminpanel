@@ -60,7 +60,7 @@ class CategoryRows extends DataTableSource {
             onEditPressed:
                 () =>
                     Get.toNamed(AriloRoute.editCategory, arguments: category ),
-            onDeletePressed: () => controller.confirmAndDeleteCaterogy(category),
+            onDeletePressed: () => controller.confirmAndDeleteItem(category),
           ),
         ),
       ],

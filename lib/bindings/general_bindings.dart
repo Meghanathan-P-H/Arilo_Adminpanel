@@ -1,4 +1,5 @@
 import 'package:arilo_admin/data/network/network_manager.dart';
+import 'package:arilo_admin/data/repositories/brand_repo.dart';
 import 'package:arilo_admin/data/repositories/category_repo.dart';
 import 'package:arilo_admin/features/authentication/controller/user_controller.dart';
 import 'package:arilo_admin/features/media/controls/media_controller.dart';
@@ -17,6 +18,7 @@ class GeneralBindings extends Bindings {
     Get.lazyPut(() => MediaRepository(), fenix: true);
     Get.lazyPut(() => CategoryController(), fenix: true);
     Get.lazyPut(() => CategoryRepository(), fenix: true);
+    Get.lazyPut(() => BrandRepository(), fenix: true);
     //UserContoller
   }
 }

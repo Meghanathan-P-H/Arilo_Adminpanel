@@ -72,7 +72,7 @@ class ProductsRows extends DataTableSource {
         DataCell(Text(product.formattedDate)),
         DataCell(TableActionButtons(
           onEditPressed: ()=>Get.toNamed(AriloRoute.editProduct,arguments: product),
-          onDeletePressed: ()=>controller.confirmAndDeleteCaterogy(product),
+          onDeletePressed: ()=>controller.confirmAndDeleteItem(product),
           
         ))
       ],

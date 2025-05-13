@@ -43,7 +43,6 @@ class CategoryModel {
     if (document.data() != null) {
       final data = document.data()!;
 
-      // Map JSON Record to the Model
       return CategoryModel(
         id: document.id,
         name: data['Name'] ?? "",

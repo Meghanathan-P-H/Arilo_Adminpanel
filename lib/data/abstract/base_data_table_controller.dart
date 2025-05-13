@@ -84,7 +84,7 @@ abstract class AriloBaseController<T> extends GetxController {
     filteredItems.refresh();
   }
 
-  confirmAndDeleteCaterogy(T category) {
+  confirmAndDeleteItem(T category) {
     Get.defaultDialog(
       title: 'Delete Item',
       content: const Text('Are you sure want to delete this Items?'),
