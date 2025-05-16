@@ -1,5 +1,5 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
-import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/table/data_table.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/widgets/bar_graph.dart';
 import 'package:arilo_admin/features/shop/screens/dashbord/widgets/card_widget.dart';

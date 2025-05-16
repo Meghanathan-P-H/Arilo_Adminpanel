@@ -129,7 +129,7 @@ class ProductAttributes extends StatelessWidget {
                               width: 150,
                               height: 80,
                               imageType: ImageType.asset,
-                              image: 'assets/images/imagedefulticon.png',
+                              image: 'assets/images/imagedefulticon.png',//square colors are here need to change
                             ),
                           ],
                         ),
@@ -145,17 +145,20 @@ class ProductAttributes extends StatelessWidget {
           () =>
               productController.productType.value == ProductType.variable &&
                       variationController.productVariations.isEmpty
-                  ? Center(
-                    child: SizedBox(
-                      width: 200,
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Iconsax.activity),
-                        label: const Text('Generate Variations'),
-                        onPressed:
-                            () => variationController
-                                .generateVariationsConfirmation(context),
+                  ? Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: Center(
+                      child: SizedBox(
+                        width: 200,
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Iconsax.activity),
+                          label: const Text('Generate Variations'),
+                          onPressed:
+                              () => variationController
+                                  .generateVariationsConfirmation(context),
+                        ), 
                       ), 
-                    ), 
+                    ),
                   )
                   : const SizedBox.shrink(),
         ),
@@ -205,7 +208,7 @@ class ProductAttributes extends StatelessWidget {
         icon: const Icon(Iconsax.add),
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
-          backgroundColor: AriloColors.lightshow,
+          backgroundColor: Colors.yellowAccent, 
           side: const BorderSide(color: AriloColors.iconSearchCl),
         ),
         label: Text('Add'),

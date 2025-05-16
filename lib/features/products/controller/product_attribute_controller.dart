@@ -35,7 +35,7 @@ class ProductAttributesController extends GetxController {
       title: 'Removal Confirmation',
       confirmText: 'Remove',
       onConfirm: () {
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
         productAttributes.removeAt(index);
 
         ProductVariationController.instance.productVariations.value = [];

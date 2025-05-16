@@ -1,5 +1,6 @@
 import 'package:arilo_admin/features/products/models/product_attribute_model.dart';
 import 'package:arilo_admin/features/products/models/product_variation_model.dart';
+import 'package:arilo_admin/features/shop/models/brand_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -13,7 +14,7 @@ class ProductModel {
   double salePrice;
   String thumbnail;
   bool? isFeatured;
-  // BrandModel? brand;
+  BrandModel? brand;
   String? categoryId;
   String productType;
   String? description;
@@ -31,7 +32,7 @@ class ProductModel {
     required this.productType,
     this.soldQuantity = 0,
     this.sku,
-    // this.brand,
+    this.brand,
     this.date,
     this.images,
     this.salePrice = 0.0,
@@ -66,7 +67,7 @@ class ProductModel {
     'SalePrice': salePrice,
     'IsFeatured': isFeatured,
     'CategoryId': categoryId,
-    // 'Brand': brand!.toJson(),
+    'Brand': brand!.toJson(),
     'Description': description,
     'ProductType': productType,
     'SoldQuantity': soldQuantity,
@@ -93,7 +94,7 @@ class ProductModel {
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
       productType: data['ProductType'] ?? '',
-      // brand: BrandModel.fromJson(data['Brand']),
+      brand: BrandModel.fromJson(data['Brand']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productAttributes:
           (data['ProductAttributes'] as List<dynamic>)
@@ -124,7 +125,7 @@ class ProductModel {
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
       productType: data['ProductType'] ?? '',
-      // brand: BrandModel.fromJson(data['Brand']),
+      brand: BrandModel.fromJson(data['Brand']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productAttributes:
           (data['ProductAttributes'] as List<dynamic>)

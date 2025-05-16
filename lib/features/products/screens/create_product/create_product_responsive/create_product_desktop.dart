@@ -1,12 +1,16 @@
 import 'package:arilo_admin/common/widgets/breadcrumps/breadcrumb_with_heading.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
+import 'package:arilo_admin/features/products/screens/create_product/widgets/category_widget.dart';
+import 'package:arilo_admin/features/products/screens/create_product/widgets/product_additional_imgage.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_attribute.dart';
+import 'package:arilo_admin/features/products/screens/create_product/widgets/product_bottomsheet.dart';
+import 'package:arilo_admin/features/products/screens/create_product/widgets/product_brand.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_stock_pricing.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_titleanddiscription.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_tumbline_img.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_type_widget.dart';
 import 'package:arilo_admin/features/products/screens/create_product/widgets/product_variation_widget.dart';
-import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +23,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ProductImageController());
     return Scaffold(
-      // bottomNavigationBar: const ProductBottomNavigationButton(),
+      bottomNavigationBar: const ProductBottomNavigationButtons(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(24),
@@ -87,28 +91,27 @@ class CreateProductDesktopScreen extends StatelessWidget {
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
                               SizedBox(height: 16),
-                              // ProductAdditionalImages(
-                              //   additionalProductImagesURLs:
-                              //       controller.additionalProductImagesUrls,
-                              //   onTapToAddImages:
-                              //       () =>
-                              //           controller
-                              //               .selectMultipleProductImages(),
-                              //   onTapToRemoveImage:
-                              //       (index) => controller.removeImage(index),
-                              // ),
+                              ProductAdditionalImages(
+                                additionalProductImagesURLs:
+                                    controller.additionalProductImageUrls,
+                                onTapToAddImages:
+                                    () =>
+                                        controller
+                                            .selectMultipleProductImage(),
+                                onTapToRemoveImage:
+                                    (index) => controller.removeImage(index),
+                              ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 32),
 
                         
-                        // const ProductBrand(),
-                        // const SizedBox(height: TSizes.spaceBtwSections),
+                        const ProductBrand(),
+                        const SizedBox(height:32),
 
-                        // Product Categories
-                        // const ProductCategories(),
-                        // const SizedBox(height: 32)
+                        const ProductCategories(),
+                        const SizedBox(height: 32)
 
                         // // Product Visibility
                         // const ProductVisibilityWidget(),

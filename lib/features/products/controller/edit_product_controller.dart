@@ -3,7 +3,7 @@ import 'package:arilo_admin/features/products/controller/product_attribute_contr
 import 'package:arilo_admin/features/products/controller/produt_variation_controller.dart';
 import 'package:arilo_admin/features/products/models/product_model.dart';
 import 'package:arilo_admin/features/shop/controllers/category_controller/category_controller.dart';
-import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/features/shop/models/category_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:flutter/foundation.dart';

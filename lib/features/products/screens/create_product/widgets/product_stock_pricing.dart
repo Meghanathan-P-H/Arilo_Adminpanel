@@ -21,7 +21,6 @@ class ProductStockAndPricing extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Stock
                   FractionallySizedBox(
                     widthFactor: 0.45,
                     child: TextFormField(
@@ -36,8 +35,8 @@ class ProductStockAndPricing extends StatelessWidget {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
-                    ), // TextFormField
-                  ), // FractionallySizedBox
+                    ),  
+                  ), 
                   const SizedBox(height: 16),
 
                   Row(children: [
@@ -61,7 +60,7 @@ class ProductStockAndPricing extends StatelessWidget {
                 ],
               ),
             )
-          : Container(), 
+          : SizedBox.shrink(), 
     );
   }
 }

@@ -5,7 +5,8 @@ import 'package:arilo_admin/features/products/controller/product_controller.dart
 import 'package:arilo_admin/features/products/controller/produt_variation_controller.dart';
 import 'package:arilo_admin/features/products/models/product_category_model.dart';
 import 'package:arilo_admin/features/products/models/product_model.dart';
-import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
+import 'package:arilo_admin/features/shop/models/brand_model.dart';
 import 'package:arilo_admin/features/shop/models/category_model.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
@@ -35,7 +36,7 @@ class CreateProductController extends GetxController {
   TextEditingController description = TextEditingController();
   TextEditingController brandTextField = TextEditingController();
 
-  // final Rx<BrandModel?> selectedBrand = Rx<BrandModel?>(null);
+  final Rx<BrandModel?> selectedBrand = Rx<BrandModel?>(null);
   final RxList<CategoryModel> selectedCategories = <CategoryModel>[].obs;
 
   RxBool thumbnailUploader = false.obs;
@@ -64,7 +65,7 @@ class CreateProductController extends GetxController {
         return;
       }
 
-      // if (selectedBrand.value == null) throw 'Select Brand for this product';
+      if (selectedBrand.value == null) throw 'Select Brand for this product';
 
       if (productType.value == ProductType.variable &&
           ProductVariationController.instance.productVariations.isEmpty) {
@@ -92,7 +93,7 @@ class CreateProductController extends GetxController {
       }
 
       thumbnailUploader.value = true;
-      final ProductImageController imagesController =
+      final imagesController =
           ProductImageController.instance;
       if (imagesController.selectedThumblineImageUrl.value == null) {
         throw 'Select Product Thumbnail Image';
@@ -111,7 +112,7 @@ class CreateProductController extends GetxController {
         sku: '',
         isFeatured: true,
         title: title.text.trim(),
-        // brand: selectedBrand.value,
+        brand: selectedBrand.value,
         productVariations: variations,
         description: description.text.trim(),
         productType: productType.value.toString(),
@@ -165,7 +166,7 @@ class CreateProductController extends GetxController {
     price.clear();
     salePrice.clear();
     brandTextField.clear();
-    // selectedBrand.value = null;
+    selectedBrand.value = null;
     selectedCategories.clear();
     ProductVariationController.instance.resetAllValues();
     ProductAttributesController.instance.resetProductAttributes();

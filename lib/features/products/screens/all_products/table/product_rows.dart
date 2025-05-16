@@ -45,28 +45,28 @@ class ProductsRows extends DataTableSource {
         ),
         DataCell(Text(controller.getProductStockTotal(product))),
         DataCell(Text(controller.getProductSoldQuantity(product))),
-        // DataCell(
-        //   Row(
-        //     children: [
-        //     AriloRoundedImage(
-        //         width: 35,
-        //         height: 35,
-        //         padding: 4,
-        //         borderRadius: 8,
-        //         backgroundColor: A,
-        //         imageType: product.brand != null
-        //             ? ImageType.network
-        //             : ImageType.asset,
-        //         image: product.brand != null
-        //             ? product.brand!.image
-        //             : AImages.defaultImage,
-        //       ),
-        //     const SizedBox(width: 16,),
-        //     Flexible(child: Text(product.brand!=null?product.brand!.name:'',
-        //     style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(color: AriloColors.textSecondary),))
-        //     ],
-        //   ),
-        // ),
+        DataCell(
+          Row(
+            children: [
+            AriloRoundedImage(
+                width: 35,
+                height: 35,
+                padding: 4,
+                borderRadius: 8,
+                backgroundColor: AriloColors.textSecondary,
+                imageType: product.brand != null
+                    ? ImageType.network
+                    : ImageType.asset,
+                image: product.brand != null
+                    ? product.brand!.image
+                    : 'assets/images/imagedefulticon.png',
+              ),
+            const SizedBox(width: 16,),
+            Flexible(child: Text(product.brand!=null?product.brand!.name:'',
+            style: Theme.of(Get.context!).textTheme.bodyLarge!.apply(color: AriloColors.textSecondary),))
+            ],
+          ),
+        ),
 
         DataCell(Text('\$${controller.getProductPrice(product)}')),
         DataCell(Text(product.formattedDate)),

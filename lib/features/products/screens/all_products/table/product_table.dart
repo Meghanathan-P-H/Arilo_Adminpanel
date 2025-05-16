@@ -28,7 +28,7 @@ class ProductTable extends StatelessWidget {
           onSort: (columnIndex, ascending) => controller.sortByStock(columnIndex, ascending),),
           DataColumn2(label: const Text('Sold'),
           onSort: (columnIndex, ascending) => controller.sortBySoldItems(columnIndex, ascending),),
-          // DataColumn2(label: const Text('Brand')),
+          DataColumn2(label: const Text('Brand')),
           DataColumn2(label: const Text('Price'),
           onSort: (columnIndex, ascending) => controller.sortByPrice(columnIndex, ascending),),
            DataColumn2(label: const Text('Date')),

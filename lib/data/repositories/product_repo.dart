@@ -35,9 +35,21 @@ class ProductRepository extends GetxController {
           .collection("ProductCategory")
           .add(productCategory.toJson());
       return result.id;
-    } on FirebaseAuthException catch (e) {
-      throw 'Authentication error: ${e.message}';
     } on FirebaseException catch (e) {
+      throw 'Firestore error: ${e.message}';
+    } on FormatException catch (_) {
+      throw 'Invalid data format';
+    } on PlatformException catch (e) {
+      throw 'Platform error: ${e.message}';
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  Future<void>updateProduct(ProductModel product)async{
+    try{
+      await _db.collection('Products').doc(product.id).update(product.toJson());
+    }on FirebaseException catch (e) {
       throw 'Firestore error: ${e.message}';
     } on FormatException catch (_) {
       throw 'Invalid data format';
@@ -82,9 +94,8 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<void> deleteProduct(ProductModel product) async {
+  Future<void> deleteProduct(ProductModel product) async {  
     try {
-      // Delete all data at once from Firebase Firestore
       await _db.runTransaction((transaction) async {
         final productRef = _db.collection("Products").doc(product.id);
         final productSnap = await transaction.get(productRef);

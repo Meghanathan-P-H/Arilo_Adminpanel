@@ -3,9 +3,8 @@ import 'package:arilo_admin/common/widgets/containers/rounded_image.dart';
 import 'package:arilo_admin/features/products/controller/create_product_controller.dart';
 import 'package:arilo_admin/features/products/controller/produt_variation_controller.dart';
 import 'package:arilo_admin/features/products/models/product_variation_model.dart';
-import 'package:arilo_admin/features/shop/controllers/product_controller/product_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/features/shop/screens/category/categories/widgets/image_uploader.dart';
-import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -75,8 +74,8 @@ class ProductVariations extends StatelessWidget {
     ProductVariationController variationController,
   ) {
     return ExpansionTile(
-      backgroundColor: AriloColors.lightshow,
-      collapsedBackgroundColor: AriloColors.lightshow,
+      backgroundColor: const Color(0xFFF6F6F9),
+      collapsedBackgroundColor:Color(0xFFF6F6F9),
       childrenPadding: const EdgeInsets.all(16),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -115,6 +114,7 @@ class ProductVariations extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(width: 16,),
 
             Expanded(
               child: TextFormField(
@@ -133,7 +133,7 @@ class ProductVariations extends StatelessWidget {
                     variationController.priceControllersList[index][variation],
               ),
             ),
-            const SizedBox(width: 24),
+            const SizedBox(width: 16),
             Expanded(
               child: TextFormField(
                 keyboardType: const TextInputType.numberWithOptions(
@@ -154,7 +154,7 @@ class ProductVariations extends StatelessWidget {
             ),
           ],
         ),
-
+         const SizedBox(width: 16),
         TextFormField(
           onChanged: (value) => variation.description = value,
           controller:
@@ -179,7 +179,7 @@ class ProductVariations extends StatelessWidget {
               width: 200,
               height: 200,
               imageType: ImageType.asset,
-              image: 'assets/images/imagedefulticon.png',
+              image: 'assets/images/imagedefulticon.png',//show good one change it bottom
             ),
           ],
         ), // Row

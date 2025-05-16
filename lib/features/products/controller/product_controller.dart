@@ -17,10 +17,10 @@ class ProductController extends AriloBaseController<ProductModel> {
   @override
   bool containsSearchQuery(ProductModel item, String query) {
     return item.title.toLowerCase().contains(query.toLowerCase()) ||
-        item.stock.toString().contains(query) ||
+        item.stock.toString().contains(query) ||item.brand!.name.toLowerCase().contains(query.toLowerCase())||
         item.price.toString().contains(query);
   }
-  // item.brand!.name.toLowerCase().contains(query.toLowerCase())||
+  
 
   @override
   Future<void> deleteItem(ProductModel item) async {

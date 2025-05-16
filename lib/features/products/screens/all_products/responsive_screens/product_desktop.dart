@@ -4,7 +4,7 @@ import 'package:arilo_admin/features/products/controller/product_controller.dart
 import 'package:arilo_admin/features/products/screens/all_products/table/product_table.dart';
 import 'package:arilo_admin/features/products/screens/all_products/widgets/product_table_header.dart';
 import 'package:arilo_admin/routes/routes.dart';
-import 'package:arilo_admin/utils/popups/animation_loder.dart';
+import 'package:arilo_admin/utils/popups/reuse_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,25 +28,21 @@ class ProductDesktopScreen extends StatelessWidget {
               const SizedBox(height: 32),
               Obx(() {
                 if (controller.isLoding.value) {
-                  return const AriloAnimationLoaderWidget(
-                    animation: '',
-                    text: '',
-                  );
+                  return ReuseAnimation();
                 }
 
-                return ARoundedContainer(child: Column(
-                  children: [
-                    ProductTableHeader(
-                      textButton: 'Create New Banner',
-                      onPressed: () => Get.toNamed(AriloRoute.createProduct),
-                    ),
-                    const SizedBox(height: 16),
-                    const SizedBox(
-                      height: 600, 
-                      child: ProductTable(),
-                    ),
-                  ],
-                ),);
+                return ARoundedContainer(
+                  child: Column(
+                    children: [
+                      ProductTableHeader(
+                        textButton: 'Create New Banner',
+                        onPressed: () => Get.toNamed(AriloRoute.createProduct),searchOnChanged:(query)=> controller.searchQuery(query),
+                      ),
+                      const SizedBox(height: 16),
+                      const SizedBox(height: 600, child: ProductTable()),
+                    ],
+                  ),
+                );
               }),
             ],
           ),
