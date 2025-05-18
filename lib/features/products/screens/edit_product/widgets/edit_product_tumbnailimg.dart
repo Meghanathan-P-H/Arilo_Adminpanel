@@ -14,7 +14,10 @@ class EditProductThumbnailImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductImageController controller = Get.put(ProductImageController());
+    final controller = Get.put(
+      ProductImageController(isEditMode: true, productModel: product),
+      tag: 'createProductImage',
+    );
 
     return ARoundedContainer(
       child: Column(

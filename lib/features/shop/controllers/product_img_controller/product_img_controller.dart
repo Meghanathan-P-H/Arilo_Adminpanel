@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 
 
 class ProductImageController extends GetxController {
-  static ProductImageController get instance => Get.find();
+   static ProductImageController get instance => 
+      Get.find<ProductImageController>(tag: 'createProductImage');
 
   ProductImageController({bool isEditMode = false, ProductModel? productModel}) {
    

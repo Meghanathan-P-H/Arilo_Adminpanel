@@ -93,6 +93,8 @@ flutter:
     - assets/images/defultImagecolors.png
     - assets/logos/loding.json
     - assets/logos/datas_loading.json
+    - assets/logos/done.json
+    - assets/logos/uploadingfile.json
     
 
     

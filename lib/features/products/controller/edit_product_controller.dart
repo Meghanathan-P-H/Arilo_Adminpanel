@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class EditProductController extends GetxController {
   static EditProductController get instance => Get.find();
@@ -248,7 +249,12 @@ class EditProductController extends GetxController {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('', height: 200, width: 200),
+                    Lottie.asset(
+                      'assets/logos/uploadingfile.json',
+                      height: 200,
+                      width: 200,
+                      repeat: true,
+                    ),
                     const SizedBox(height: 16),
                     buildCheckbox('Thumbnail Image', thumbnailUploader),
                     buildCheckbox(
@@ -308,7 +314,12 @@ class EditProductController extends GetxController {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('', height: 200, width: 200),
+            Lottie.asset(
+              'assets/logos/done.json',
+              height: 200,
+              width: 200,
+              repeat: true,
+            ),
             const SizedBox(height: 16),
             Text(
               'Congratulations',

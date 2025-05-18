@@ -159,7 +159,7 @@ class EditProductVariation extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(width: 16),
+        const SizedBox(height: 16),
         TextFormField(
           onChanged: (value) => variation.description = value,
           controller:

@@ -45,7 +45,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: AriloDeviceUtils.isTabletScreen(context) ? 2 : 3,
-                    child: Column(
+                    child: Column(  
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const ProductTitleAndDescription(),
@@ -78,7 +78,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(width: 24),
 
                   Expanded(
                     child: Column(

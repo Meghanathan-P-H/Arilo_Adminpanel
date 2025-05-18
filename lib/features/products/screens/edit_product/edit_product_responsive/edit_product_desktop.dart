@@ -24,7 +24,12 @@ class EditProductDesktopScreen extends StatelessWidget {
   final ProductModel product;
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductImageController());
+    final controller = Get.put(
+  ProductImageController(isEditMode: true, productModel: product), 
+  tag: 'createProductImage'
+);
+
+
     return Scaffold(
       bottomNavigationBar:ProductEditBottomNavigationButtons(product: product,),
       body: SingleChildScrollView(
@@ -77,7 +82,7 @@ class EditProductDesktopScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(width: 24),
 
                   Expanded(
                     child: Column(

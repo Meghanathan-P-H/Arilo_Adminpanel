@@ -45,15 +45,19 @@ class ProductStockAndPricing extends StatelessWidget {
                       decoration: InputDecoration(labelText: 'Price',hintText: 'Price with up-to 2 decimals'),
                       validator: (value)=>AriloValidator.validateEmptyText('Price', value),
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters:<TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^(a+),2^(d{0,2}$)'),) ],
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                      ],
                     )),
-                     const SizedBox(height: 16),
+                     const SizedBox(width: 16),
                     Expanded(child:   TextFormField(
                       controller: controller.salePrice,
                       decoration: InputDecoration(labelText: 'Discouted Price',hintText: 'Price with up-to 2 decimals'),
                       validator: (value)=>AriloValidator.validateEmptyText('Discout Price', value),
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters:<TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^(a+),2^(d{0,2}$)'),) ],
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                      ],
                     )),
 
                   ],)

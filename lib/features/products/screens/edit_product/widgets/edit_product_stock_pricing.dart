@@ -68,7 +68,7 @@ class EditProductStockAndPricing extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
                             controller: controller.salePrice,

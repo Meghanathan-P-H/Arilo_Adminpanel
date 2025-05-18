@@ -13,6 +13,7 @@ import 'package:arilo_admin/utils/popups/loding_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class CreateProductController extends GetxController {
   // Singleton instance
@@ -112,6 +113,8 @@ class CreateProductController extends GetxController {
         isFeatured: true,
         title: title.text.trim(),
         brand: selectedBrand.value,
+        categoryId:
+            selectedCategories.isNotEmpty ? selectedCategories[0].id : null,
         productVariations: variations,
         description: description.text.trim(),
         productType: productType.value.toString(),
@@ -157,19 +160,33 @@ class CreateProductController extends GetxController {
     isLoading.value = false;
     productType.value = ProductType.single;
     productVisibility.value = ProductVisibility.hidden;
+
+    // Reset form states
     stockPriceFormKey.currentState?.reset();
     titleDescriptionFormKey.currentState?.reset();
+
+    // Clear all text controllers
     title.clear();
     description.clear();
     stock.clear();
     price.clear();
     salePrice.clear();
     brandTextField.clear();
+
+    // Reset selected values
     selectedBrand.value = null;
     selectedCategories.clear();
+
+    // Reset all dependent controllers
     ProductVariationController.instance.resetAllValues();
     ProductAttributesController.instance.resetProductAttributes();
 
+    // Reset the ProductImageController values
+    final imageController = ProductImageController.instance;
+    imageController.selectedThumblineImageUrl.value = null;
+    imageController.additionalProductImageUrls.clear();
+
+    // Reset upload status trackers
     thumbnailUploader.value = false;
     additionalImagesUploader.value = false;
     productDataUploader.value = false;
@@ -189,10 +206,11 @@ class CreateProductController extends GetxController {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset(
-                      'assets/images/shoes.png',
+                    Lottie.asset(
+                      'assets/logos/uploadingfile.json',
                       height: 200,
                       width: 200,
+                      repeat: true,
                     ),
                     const SizedBox(height: 16),
                     buildCheckbox('Thumbnail Image', thumbnailUploader),
@@ -253,7 +271,12 @@ class CreateProductController extends GetxController {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/shoes.png', height: 200, width: 200),
+            Lottie.asset(
+              'assets/logos/done.json',
+              height: 200,
+              width: 200,
+              repeat: true,
+            ),
             const SizedBox(height: 16),
             Text(
               'Congratulations',

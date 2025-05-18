@@ -11,11 +11,9 @@ class ProductThumbnailImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductImageController controller = Get.put(
-      ProductImageController(isEditMode: false),
+    final ProductImageController controller = Get.find<ProductImageController>(
       tag: 'createProductImage'
     );
-
     return ARoundedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
