@@ -1,33 +1,32 @@
 import 'package:arilo_admin/common/widgets/breadcrumps/breadcrumb_with_heading.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/category_widget.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_additional_imgage.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_attribute.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_bottomsheet.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_brand.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_stock_pricing.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_titleanddiscription.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_tumbline_img.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_type_widget.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_variation_widget.dart';
-import 'package:arilo_admin/features/products/screens/create_product/widgets/product_visibility.dart';
+import 'package:arilo_admin/features/products/models/product_model.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_additiona_img.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_bottom_navigation.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_attributes.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_brand.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_categories.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_stock_pricing.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_titleanddiscription.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_tumbnailimg.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_type_widget.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_variation.dart';
+import 'package:arilo_admin/features/products/screens/edit_product/widgets/edit_product_visibility.dart';
 import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CreateProductDesktopScreen extends StatelessWidget {
-  const CreateProductDesktopScreen({super.key});
+class EditProductDesktopScreen extends StatelessWidget {
+  const EditProductDesktopScreen({super.key,required this.product});
 
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(
-      ProductImageController(isEditMode: false), 
-      tag: 'createProductImage'
-    );
+    final controller = Get.put(ProductImageController());
     return Scaffold(
-      bottomNavigationBar: const ProductBottomNavigationButtons(),
+      bottomNavigationBar:ProductEditBottomNavigationButtons(product: product,),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(24),
@@ -36,8 +35,8 @@ class CreateProductDesktopScreen extends StatelessWidget {
             children: [
               const AriloBreadCrumbs(
                 returnToPreviousScreen: true,
-                heading: 'Create Product',
-                breadcrumbItems: [AriloRoute.product, 'Create Product'],
+                heading: 'Edit Product',
+                breadcrumbItems: [AriloRoute.editProduct, 'Edit Product'],
               ),
               const SizedBox(height: 32),
               Row(
@@ -48,7 +47,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const ProductTitleAndDescription(),
+                        EditProductTitleAndDescription(product: product,),
                         const SizedBox(height: 32),
 
                         ARoundedContainer(
@@ -62,19 +61,19 @@ class CreateProductDesktopScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 16),
 
-                              const ProductTypeWidget(),
+                              EditProductTypeWidget(product: product),
                               const SizedBox(height: 16),
 
-                              const ProductStockAndPricing(),
+                              EditProductStockAndPricing(product: product,),
                               const SizedBox(height: 32),
 
-                              const ProductAttributes(),
+                              EditProductAttributes(product: product,),
                               const SizedBox(height: 32),
                             ],
                           ),
                         ),
                         const SizedBox(height: 32),
-                        ProductVariations(),
+                        EditProductVariation(product: product,),
                       ],
                     ),
                   ),
@@ -83,7 +82,7 @@ class CreateProductDesktopScreen extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        const ProductThumbnailImage(),
+                        EditProductThumbnailImage(product: product,),
                         const SizedBox(height: 32),
                         ARoundedContainer(
                           child: Column(
@@ -95,13 +94,12 @@ class CreateProductDesktopScreen extends StatelessWidget {
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
                               SizedBox(height: 16),
-                              ProductAdditionalImages(
+                              EditProductAdditionalImages(
                                 additionalProductImagesURLs:
                                     controller.additionalProductImageUrls,
                                 onTapToAddImages:
                                     () =>
-                                        controller
-                                            .selectMultipleProductImage(),
+                                        controller.selectMultipleProductImage(),
                                 onTapToRemoveImage:
                                     (index) => controller.removeImage(index),
                               ),
@@ -110,15 +108,13 @@ class CreateProductDesktopScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
 
-                        
-                        const ProductBrand(),
-                        const SizedBox(height:32),
-
-                        const ProductCategories(),
+                        EditProductBrand(product: product,),
                         const SizedBox(height: 32),
 
-                
-                        const ProductVisibilityWidget(),
+                        EditProductCategories(product: product,),
+                        const SizedBox(height: 32),
+
+                        EditProductVisibilityWidget(product:product),
                         const SizedBox(height: 32)
                       ],
                     ),

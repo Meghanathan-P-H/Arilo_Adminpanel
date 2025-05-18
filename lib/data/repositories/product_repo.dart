@@ -46,10 +46,10 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<void>updateProduct(ProductModel product)async{
-    try{
+  Future<void> updateProduct(ProductModel product) async {
+    try {
       await _db.collection('Products').doc(product.id).update(product.toJson());
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       throw 'Firestore error: ${e.message}';
     } on FormatException catch (_) {
       throw 'Invalid data format';
@@ -94,7 +94,7 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<void> deleteProduct(ProductModel product) async {  
+  Future<void> deleteProduct(ProductModel product) async {
     try {
       await _db.runTransaction((transaction) async {
         final productRef = _db.collection("Products").doc(product.id);
@@ -109,12 +109,16 @@ class ProductRepository extends GetxController {
                 .collection("ProductCategory")
                 .where("productId", isEqualTo: product.id)
                 .get();
-        final productCategories = productCategoriesSnapshot.docs.map((e) => ProductCategoryModel.fromSnapshot(e));
+        final productCategories = productCategoriesSnapshot.docs.map(
+          (e) => ProductCategoryModel.fromSnapshot(e),
+        );
 
         if (productCategories.isNotEmpty) {
-            for (var productCategory in productCategories) {
-                transaction.delete(_db.collection("ProductCategory").doc(productCategory.id));
-            }
+          for (var productCategory in productCategories) {
+            transaction.delete(
+              _db.collection("ProductCategory").doc(productCategory.id),
+            );
+          }
         }
 
         transaction.delete(productRef);
@@ -130,26 +134,51 @@ class ProductRepository extends GetxController {
     }
   }
 
+  Future<List<ProductCategoryModel>> getProductCategories(
+    String productId,
+  ) async {
+    try {
+      final snapshot =
+          await _db
+              .collection('ProductCategory')
+              .where('productId', isEqualTo: productId)
+              .get();
 
-Future<List<ProductCategoryModel>> getProductCategories(String productId) async {
-  try {
-    final snapshot = await _db
-        .collection('ProductCategory')
-        .where('productId', isEqualTo: productId)
-        .get();
-        
-    return snapshot.docs
-        .map((querySnapshot) => ProductCategoryModel.fromSnapshot(querySnapshot))
-        .toList();
-        
-  } on FirebaseException catch (e) {
-    throw 'FirebaseException ${e.code}';
-  } on PlatformException catch (e) {
-    throw 'PlatformException ${e.code}';
-  } catch (e) {
-    throw 'Something went wrong. Please try again';
+      return snapshot.docs
+          .map(
+            (querySnapshot) => ProductCategoryModel.fromSnapshot(querySnapshot),
+          )
+          .toList();
+    } on FirebaseException catch (e) {
+      throw 'FirebaseException ${e.code}';
+    } on PlatformException catch (e) {
+      throw 'PlatformException ${e.code}';
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
   }
-}
 
+  Future<void> removeProductCategory(
+    String productId,
+    String categoryId,
+  ) async {
+    try {
+      final result =
+          await _db
+              .collection("ProductCategory")
+              .where('productId', isEqualTo: productId)
+              .where('categoryId', isEqualTo: categoryId)
+              .get();
 
+      for (final doc in result.docs) {
+        await doc.reference.delete();
+      }
+    } on FirebaseException catch (e) {
+      throw 'FirebaseException ${e.code}';
+    } on PlatformException catch (e) {
+      throw 'PlatformException ${e.code}';
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

@@ -6,6 +6,7 @@ import 'package:arilo_admin/features/media/controls/media_controller.dart';
 import 'package:arilo_admin/features/media/controls/mediarepo.dart';
 import 'package:arilo_admin/features/shop/controllers/category_controller/category_controller.dart';
 import 'package:arilo_admin/features/shop/controllers/dashboard_controller/dashbord_controller.dart';
+import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:get/get.dart';
 
 class GeneralBindings extends Bindings {
@@ -19,6 +20,7 @@ class GeneralBindings extends Bindings {
     Get.lazyPut(() => CategoryController(), fenix: true);
     Get.lazyPut(() => CategoryRepository(), fenix: true);
     Get.lazyPut(() => BrandRepository(), fenix: true);
+    Get.lazyPut(() => ProductImageController(), fenix: true);
     //UserContoller
   }
 }

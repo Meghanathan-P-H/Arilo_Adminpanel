@@ -1,20 +1,20 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_image.dart';
+import 'package:arilo_admin/features/products/models/product_model.dart';
 import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
 import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductThumbnailImage extends StatelessWidget {
-  const ProductThumbnailImage({super.key});
+class EditProductThumbnailImage extends StatelessWidget {
+  const EditProductThumbnailImage({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    final ProductImageController controller = Get.put(
-      ProductImageController(isEditMode: false),
-      tag: 'createProductImage'
-    );
+    final ProductImageController controller = Get.put(ProductImageController());
 
     return ARoundedContainer(
       child: Column(
@@ -43,7 +43,7 @@ class ProductThumbnailImage extends StatelessWidget {
                             width: 220,
                             image:
                                 controller.selectedThumblineImageUrl.value ??
-                                'assets/images/imagedefulticon.png',//tumbnail image if u want change it
+                                product.thumbnail,
                             imageType:
                                 controller.selectedThumblineImageUrl.value ==
                                         null

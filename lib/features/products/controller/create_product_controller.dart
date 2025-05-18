@@ -93,8 +93,7 @@ class CreateProductController extends GetxController {
       }
 
       thumbnailUploader.value = true;
-      final imagesController =
-          ProductImageController.instance;
+      final imagesController = ProductImageController.instance;
       if (imagesController.selectedThumblineImageUrl.value == null) {
         throw 'Select Product Thumbnail Image';
       }
@@ -118,7 +117,7 @@ class CreateProductController extends GetxController {
         productType: productType.value.toString(),
         stock: int.tryParse(stock.text.trim()) ?? 0,
         price: double.tryParse(price.text.trim()) ?? 0,
-        images: imagesController.additionalProductImageUrls,
+        images: imagesController.additionalProductImageUrls.toList(),
         salePrice: double.tryParse(salePrice.text.trim()) ?? 0,
         thumbnail: imagesController.selectedThumblineImageUrl.value ?? '',
         productAttributes:
@@ -190,7 +189,11 @@ class CreateProductController extends GetxController {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('', height: 200, width: 200),
+                    Image.asset(
+                      'assets/images/shoes.png',
+                      height: 200,
+                      width: 200,
+                    ),
                     const SizedBox(height: 16),
                     buildCheckbox('Thumbnail Image', thumbnailUploader),
                     buildCheckbox(
@@ -250,7 +253,7 @@ class CreateProductController extends GetxController {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('', height: 200, width: 200),
+            Image.asset('assets/images/shoes.png', height: 200, width: 200),
             const SizedBox(height: 16),
             Text(
               'Congratulations',

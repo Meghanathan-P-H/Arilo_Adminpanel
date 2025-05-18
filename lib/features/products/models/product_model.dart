@@ -43,7 +43,8 @@ class ProductModel {
     this.productVariations,
   });
 
-  String get formattedDate => DateFormat('yyyy-MM-dd').format(date!);
+  String get formattedDate => 
+  date != null ? DateFormat('dd-MM-yyyy').format(date!) : 'No date';
 
   /// Create Empty func for clean code
   static ProductModel empty() => ProductModel(
