@@ -23,29 +23,26 @@ class ProductVariationController extends GetxController {
   final attributesController = Get.put(ProductAttributesController());
 
   void initializeVariationControllers(List<ProductVariationModel> variations) {
-    // Clear existing lists
     stockControllersList.clear();
     priceControllersList.clear();
     salePriceControllersList.clear();
     descriptionControllersList.clear();
 
-    // Initialize controllers for each variation
     for (var variation in variations) {
-      // Stock Controllers
       Map<ProductVariationModel, TextEditingController> stockControllers = {};
       stockControllers[variation] = TextEditingController(
         text: variation.stock.toString(),
       );
       stockControllersList.add(stockControllers);
 
-      // Price Controllers
+      
       Map<ProductVariationModel, TextEditingController> priceControllers = {};
       priceControllers[variation] = TextEditingController(
         text: variation.price.toString(),
       );
       priceControllersList.add(priceControllers);
 
-      // Sale Price Controllers
+      
       Map<ProductVariationModel, TextEditingController> salePriceControllers =
           {};
       salePriceControllers[variation] = TextEditingController(
@@ -53,7 +50,7 @@ class ProductVariationController extends GetxController {
       );
       salePriceControllersList.add(salePriceControllers);
 
-      // Description Controllers
+      
       Map<ProductVariationModel, TextEditingController> descriptionControllers =
           {};
       descriptionControllers[variation] = TextEditingController(

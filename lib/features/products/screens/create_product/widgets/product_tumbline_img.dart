@@ -1,7 +1,6 @@
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_image.dart';
 import 'package:arilo_admin/features/shop/controllers/product_img_controller/product_img_controller.dart';
-import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +25,7 @@ class ProductThumbnailImage extends StatelessWidget {
 
           ARoundedContainer(
             height: 300,
-            backgroundColor: AriloColors.iconSearchCl,
+            backgroundColor: Colors.grey.shade100,
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -41,7 +40,7 @@ class ProductThumbnailImage extends StatelessWidget {
                             width: 220,
                             image:
                                 controller.selectedThumblineImageUrl.value ??
-                                'assets/images/imagedefulticon.png',//tumbnail image if u want change it
+                                'assets/images/imagedefulticon.png',
                             imageType:
                                 controller.selectedThumblineImageUrl.value ==
                                         null

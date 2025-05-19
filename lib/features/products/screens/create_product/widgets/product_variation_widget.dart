@@ -182,7 +182,7 @@ class ProductVariations extends StatelessWidget {
               image: 'assets/images/imagedefulticon.png',//show good one change it bottom
             ),
           ],
-        ), // Row
+        ), 
         SizedBox(height: 32),
         Text('There are no Variations added for this product'),
       ],

@@ -46,7 +46,7 @@ class ProductModel {
   String get formattedDate => 
   date != null ? DateFormat('dd-MM-yyyy').format(date!) : 'No date';
 
-  /// Create Empty func for clean code
+  /// Create Empty fun for clean code
   static ProductModel empty() => ProductModel(
     id: '',
     title: '',

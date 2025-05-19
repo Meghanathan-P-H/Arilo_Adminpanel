@@ -16,7 +16,6 @@ class ProductAttributes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Controllers
     final productController = CreateProductController.instance;
     final attributeController = Get.put(ProductAttributesController());
     final variationController = Get.put(ProductVariationController());
@@ -41,7 +40,7 @@ class ProductAttributes extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
-        // Form to add new attribute
+        
         Form(
           key: attributeController.attributesFormKey,
           child:

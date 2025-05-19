@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class AuthenticationRepo extends GetxController {
   static AuthenticationRepo get instance => Get.find();
 
-  //Firebase Auth Instance
+  
   final _auth = FirebaseAuth.instance;
 
   User? get authUser => _auth.currentUser;
@@ -38,7 +38,6 @@ class AuthenticationRepo extends GetxController {
         password: password.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      // Handle specific Firebase Auth errors
       if (e.code == 'user-not-found') {
         throw 'No user found with this email';
       } else if (e.code == 'wrong-password') {
@@ -47,7 +46,6 @@ class AuthenticationRepo extends GetxController {
         throw 'Login failed: ${e.message}';
       }
     } catch (e) {
-      // Generic error handler
       throw 'Login failed. Please try again';
     }
   }
@@ -62,7 +60,6 @@ class AuthenticationRepo extends GetxController {
         password: password.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      // Handle specific registration errors
       if (e.code == 'weak-password') {
         throw 'Password is too weak';
       } else if (e.code == 'email-already-in-use') {

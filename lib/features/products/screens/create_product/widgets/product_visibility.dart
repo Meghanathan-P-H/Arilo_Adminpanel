@@ -20,7 +20,6 @@ class ProductVisibilityWidget extends StatelessWidget {
           Obx(
             () => Column(
               children: [
-                // Published Option
                 RadioListTile<ProductVisibility>(
                   title: const Text('Published'),
                   value: ProductVisibility.published,

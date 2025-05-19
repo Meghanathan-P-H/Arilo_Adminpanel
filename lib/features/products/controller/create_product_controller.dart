@@ -16,20 +16,20 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 class CreateProductController extends GetxController {
-  // Singleton instance
+ 
   static CreateProductController get instance => Get.find();
 
-  // Observables for loading state and product details
+  
   final isLoading = false.obs;
   final productType = ProductType.single.obs;
   final productVisibility = ProductVisibility.hidden.obs;
 
-  // Controllers and keys
+  
   final stockPriceFormKey = GlobalKey<FormState>();
   final productRepository = Get.put(ProductRepository());
   final titleDescriptionFormKey = GlobalKey<FormState>();
 
-  // Text editing controllers for input fields
+  
   TextEditingController title = TextEditingController();
   TextEditingController stock = TextEditingController();
   TextEditingController price = TextEditingController();
@@ -160,33 +160,21 @@ class CreateProductController extends GetxController {
     isLoading.value = false;
     productType.value = ProductType.single;
     productVisibility.value = ProductVisibility.hidden;
-
-    // Reset form states
     stockPriceFormKey.currentState?.reset();
     titleDescriptionFormKey.currentState?.reset();
-
-    // Clear all text controllers
     title.clear();
     description.clear();
     stock.clear();
     price.clear();
     salePrice.clear();
     brandTextField.clear();
-
-    // Reset selected values
     selectedBrand.value = null;
     selectedCategories.clear();
-
-    // Reset all dependent controllers
     ProductVariationController.instance.resetAllValues();
     ProductAttributesController.instance.resetProductAttributes();
-
-    // Reset the ProductImageController values
     final imageController = ProductImageController.instance;
     imageController.selectedThumblineImageUrl.value = null;
     imageController.additionalProductImageUrls.clear();
-
-    // Reset upload status trackers
     thumbnailUploader.value = false;
     additionalImagesUploader.value = false;
     productDataUploader.value = false;
