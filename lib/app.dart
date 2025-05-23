@@ -1,5 +1,6 @@
 import 'package:arilo_admin/bindings/general_bindings.dart';
 import 'package:arilo_admin/routes/app_routes.dart';
+import 'package:arilo_admin/routes/route_observer.dart';
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/constants/media_query.dart';
 import 'package:arilo_admin/utils/theme/theme.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       getPages: AriloAppRoute.pages,
       initialBinding: GeneralBindings(),
       initialRoute: AriloRoute.login,
+      navigatorObservers: [AriloRouteObserver()],
       unknownRoute: GetPage(name: '/page-not-found', page: ()=> const Scaffold(body: Center(child: Text('Page Not Found'),),)),
     );
   }

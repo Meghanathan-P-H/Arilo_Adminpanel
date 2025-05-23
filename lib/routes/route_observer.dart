@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 class AriloRouteObserver extends GetObserver {
   @override
   void didPop(Route<dynamic>? route, Route<dynamic>? previousRoute) {
-    final sidebarController = Get.put((SidebarController()));//sidebarContoller
+    final sidebarController = Get.put((SidebarController()));
 
     if (previousRoute != null) {
       for (var routeName in AriloRoute.sidebarMenuItems) {
         if (previousRoute.settings.name == routeName) {
-          sidebarController.activeItem.value == routeName;
+          sidebarController.activeItem.value = routeName;
         }
       }
     }
-  }
+  } 
 }

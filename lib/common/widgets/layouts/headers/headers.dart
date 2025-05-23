@@ -87,11 +87,11 @@ class AriloHeader extends StatelessWidget implements PreferredSizeWidget {
                           ? const AriloShimmerEffect(width: 50, height: 12)
                           : Text(
                             controller.user.value.fullName,
-                            style: const TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14,color: Colors.black),
                           ),
                       Text(
                         controller.user.value.email,
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12,color: Colors.black),
                       ),
                     ],
                   ),

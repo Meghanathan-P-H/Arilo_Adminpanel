@@ -1,10 +1,22 @@
 import 'package:arilo_admin/routes/routes.dart';
 import 'package:arilo_admin/utils/device/device_utility.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SidebarController extends GetxController {
-  final activeItem = AriloRoute.dashboard.obs;//resposivedesing
+  final activeItem = AriloRoute.dashboard.obs;
   final hoverItem = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Get.currentRoute != activeItem.value) {
+        Get.offAllNamed(activeItem.value);
+      }
+    });
+  }
 
   void changeActiveItem(String route) => activeItem.value = route;
 
@@ -17,7 +29,6 @@ class SidebarController extends GetxController {
 
   void menuOnTap(String route) {
     if (!isActive(route)) {
-
       changeActiveItem(route);
 
       if (AriloDeviceUtils.isMobileScreen(Get.context!)) Get.back();
@@ -26,4 +37,3 @@ class SidebarController extends GetxController {
     }
   }
 }
-// ///ivda route initialize cheythilla atha preshnam so please after 
