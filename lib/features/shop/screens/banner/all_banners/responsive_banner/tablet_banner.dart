@@ -1,18 +1,18 @@
 import 'package:arilo_admin/common/widgets/breadcrumps/breadcrumb_with_heading.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
-import 'package:arilo_admin/features/shop/controllers/category_controller/category_controller.dart';
-import 'package:arilo_admin/features/shop/screens/category/categories/table/categorytable.dart';
+import 'package:arilo_admin/features/shop/controllers/brand_controller/brand_controller.dart';
+import 'package:arilo_admin/features/shop/screens/banner/all_banners/table/banner_table.dart';
 import 'package:arilo_admin/routes/routes.dart';
-import 'package:arilo_admin/utils/popups/circularindi.dart';
+import 'package:arilo_admin/utils/popups/reuse_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoriesTablet extends StatelessWidget {
-  const CategoriesTablet({super.key});
+class TabletBannersScreen extends StatelessWidget {
+  const TabletBannersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CategoryController());
+    final controller = Get.put(BrandController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -21,8 +21,8 @@ class CategoriesTablet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const AriloBreadCrumbs(
-                heading: 'Categories',
-                breadcrumbItems: ['Categories'],
+                heading: 'Banners',
+                breadcrumbItems: ['Banners'],
               ),
               const SizedBox(height: 24),
               
@@ -34,13 +34,22 @@ class CategoriesTablet extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: Row(
                         children: [
+                          ElevatedButton(
+                            onPressed: () => Get.toNamed(AriloRoute.createBanner),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24, 
+                                vertical: 12
+                              ),
+                            ),
+                            child: Text('Create New Banner'),
+                          ),
+                          const SizedBox(width: 16),
                           Expanded(
                             flex: 2,
                             child: TextField(
-                              controller: controller.searchTextController,
-                              onChanged: (query) => controller.searchQuery(query),
                               decoration: InputDecoration(
-                                hintText: 'Search categories...',
+                                hintText: 'Search banners...',
                                 prefixIcon: Icon(Icons.search),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -52,30 +61,18 @@ class CategoriesTablet extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 16),
-                          ElevatedButton.icon(
-                            onPressed: () => Get.toNamed(AriloRoute.createCategory),
-                            icon: Icon(Icons.add, size: 18),
-                            label: Text('Create New Category'),
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 24, 
-                                vertical: 12
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 450,
+                      height: 500,
                       child: Obx(() {
                         if (controller.isLoding.value) {
                           return Center(
-                            child: BlackCircularProgressIndicator(),
+                            child: ReuseAnimation(),
                           );
                         }
-                        return const Categorytable();
+                        return BannerTable();
                       }),
                     ),
                   ],

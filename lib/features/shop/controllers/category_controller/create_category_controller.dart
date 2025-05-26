@@ -19,6 +19,8 @@ class CreateCategoryController extends GetxController {
   final name = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  static int maxCategory = 8;
+
   Future<void> createCategory() async {
     try {
       BlackCircularProgressIndicator(content: 'Creating category..');
@@ -30,6 +32,34 @@ class CreateCategoryController extends GetxController {
 
       if (!formKey.currentState!.validate()) {
         Navigator.of(Get.context!).pop();
+        return;
+      }
+
+      final getExistingCategory =
+          await CategoryRepository.instance.getAllCategories();
+
+      if (getExistingCategory.length >= maxCategory) {
+        Navigator.of(Get.context!).pop();
+        ALoaders.showErrorSnackBar(
+          title: 'Limit Reached',
+          message:
+              'Maximum $maxCategory categories allowed. Cannot add more categories!',
+        );
+        return;
+      }
+
+      final categoryName = name.text.trim().toLowerCase();
+      final isDuplicate = getExistingCategory.any(
+        (category) => category.name.toLowerCase() == categoryName,
+      );
+
+      if (isDuplicate) {
+        Navigator.of(Get.context!).pop();
+        ALoaders.showErrorSnackBar(
+          title: 'Duplicate Category',
+          message:
+              'A category with this name already exists. Please choose a different name.',
+        );
         return;
       }
 

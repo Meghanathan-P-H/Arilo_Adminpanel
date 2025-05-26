@@ -61,6 +61,23 @@ class CreateBrandController extends GetxController {
         return;
       }
 
+      final getExistingBrand = await BrandRepository.instance.getAllBrands();
+
+      final brandName = name.text.trim().toLowerCase();
+      final isDuplicate = getExistingBrand.any(
+        (category) => category.name.toLowerCase() == brandName,
+      );
+
+      if (isDuplicate) {
+        Navigator.of(Get.context!).pop();
+        ALoaders.showErrorSnackBar(
+          title: 'Duplicate Brand',
+          message:
+              'A Brand with this name already exists. Please choose a different name..',
+        );
+        return;
+      }
+
       final newRecord = BrandModel(
         id: '',
         image: imageUrl.value,
@@ -73,7 +90,7 @@ class CreateBrandController extends GetxController {
       newRecord.id = await BrandRepository.instance.createBrand(newRecord);
 
       if (selectedCategories.isNotEmpty) {
-        if (newRecord.id.isEmpty) { 
+        if (newRecord.id.isEmpty) {
           throw 'Error storing relational data.Try again';
         }
 

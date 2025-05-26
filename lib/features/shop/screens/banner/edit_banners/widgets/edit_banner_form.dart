@@ -2,7 +2,6 @@ import 'package:arilo_admin/common/widgets/containers/rounded_container.dart';
 import 'package:arilo_admin/common/widgets/containers/rounded_image.dart';
 import 'package:arilo_admin/features/shop/controllers/banner_controller/edit_banner_controller.dart';
 import 'package:arilo_admin/features/shop/models/banner_model.dart';
-import 'package:arilo_admin/utils/constants/colors.dart';
 import 'package:arilo_admin/utils/constants/enums.dart';
 import 'package:arilo_admin/utils/helpers/app_screens.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class EditBannerForm extends StatelessWidget {
                   () => AriloRoundedImage(
                     width: 400,
                     height: 200,
-                    backgroundColor: AriloColors.textLight,
+                    backgroundColor: const Color(0xFFF6F6F9),
                     image:
                         controller.imageURL.value.isNotEmpty
                             ? controller.imageURL.value

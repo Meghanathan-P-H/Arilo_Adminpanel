@@ -37,7 +37,7 @@ class CreateCategoryForm extends StatelessWidget {
                 circular: false,
                 onIconButtonPressed:
                     () =>
-                        createController.pickImage(), //image type if we can add
+                        createController.pickImage(),
               ),
             ),
 

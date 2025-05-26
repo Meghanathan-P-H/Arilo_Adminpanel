@@ -13,7 +13,7 @@ class AriloChoiceChips extends StatelessWidget {
   });
 
   Color getChipColor() {
-    return Colors.blue;
+    return Colors.black;
   }
 
   @override
@@ -23,8 +23,8 @@ class AriloChoiceChips extends StatelessWidget {
       avatar: CircleAvatar(
         backgroundColor: color,
         child: selected 
-          ? const Icon(Icons.check, color: Colors.black, size: 18)
-          : const Icon(Icons.add, color: Colors.black, size: 13),
+          ? const Icon(Icons.check, color: Colors.white, size: 18)
+          : const Icon(Icons.add, color: Colors.white, size: 13),
       ),
       label: Text(text),
       selected: selected,
