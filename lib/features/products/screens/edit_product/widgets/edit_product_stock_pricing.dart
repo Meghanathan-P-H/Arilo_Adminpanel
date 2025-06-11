@@ -62,9 +62,7 @@ class EditProductStockAndPricing extends StatelessWidget {
                               decimal: true,
                             ),
                             inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^(a+),2^(d{0,2}$)'),
-                              ),
+                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
                             ],
                           ),
                         ),
@@ -85,9 +83,7 @@ class EditProductStockAndPricing extends StatelessWidget {
                               decimal: true,
                             ),
                             inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^(a+),2^(d{0,2}$)'),
-                              ),
+                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
                             ],
                           ),
                         ),
